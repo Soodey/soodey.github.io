@@ -1,6 +1,7 @@
 <html>
   <head>
     <script>
+    window.onload = function() {
       var gender_num = Math.floor(Math.random()*2);
       if(gender_num == 1)
       {
@@ -17,6 +18,7 @@
       document.getElementById("gender").innerHTML=gender;
       document.getElementById("first_name").innerHTML=first_name;
       document.getElementById("middle_name").innerHTML=middle_name;
+      }
     </script>
   </head>
 
