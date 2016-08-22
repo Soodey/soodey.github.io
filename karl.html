@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en" dir="ltr">
+<head>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<style>
+@font-face{
+    font-family: "dclock";
+    src: url('digital-7.ttf'),
+}
+blink {
+    -webkit-animation-name: blinker;
+    -webkit-animation-duration: .5s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+
+    -moz-animation-name: blinker;
+    -moz-animation-duration: .5s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+
+    animation-name: blinker;
+    animation-duration: .5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@-moz-keyframes blinker {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes blinker {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@keyframes blinker {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes zoom {
+    from {
+        -webkit-transform: scale(1,1);
+    }
+    to {
+        -webkit-transform: scale(2,2);
+    }
+}
+
+/* Standard syntax */
+@keyframes zoom {
+    from {
+        transform: scale(1,1);
+    }
+    to {
+        transform: scale(2,2);
+    }
+}
+
+
+img {
+    -webkit-animation: zoom 60s; /* Chrome, Safari, Opera */
+    animation: zoom 60s;
+}
+</style>
+    <title>Soodey</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="countdown.js" defer="defer"></script>
+</head>
+
+<div style="font-size:80pt;text-align:center;"></div>
+<div style="text-align:center;"><blink><img src="karl.jpg"></blink></div>
+
+<div style="display:none;">
+    <iframe width="854" height="510" src="https://www.youtube.com/embed/frR9L7cCHfM?autoplay=1" frameborder="0" allowfullscreen></iframe>
+</div>
+</body>
+</html>
