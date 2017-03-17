@@ -1,6 +1,15 @@
 <html>
+  <head>
+    <style>
+      .zool {
+	-webkit-animation: wobble-hor-bottom 3s 2s infinite both;
+	-moz-animation: wobble-hor-bottom 3s 2s infinite both;
+	animation: wobble-hor-bottom 3s 2s infinite both;
+}
+    </style>
+  </head>
 <body>
-  <marquee  direction="right" width="100%"><img src="../images/zool2.gif" style="width:50%"></marquee>
+  <marquee  direction="right" width="100%"><img id="zool" class="zool" src="../images/zool2.gif" style="width:50%"></marquee>
   <audio controls autoplay loop style="display:none;">
   <source src="zool.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
