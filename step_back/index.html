@@ -1,3 +1,36 @@
-<html><body style="background-color:black;">
-<iframe width="1200" height="800" src="https://www.youtube.com/embed/__qSe1b_ukM?autoplay=1&controls=0&loop=1&playlist=__qSe1b_ukM" frameborder="0" allowfullscreen></iframe>
-  </body></html>
+<html>
+  <head>
+        <style>
+      * { box-sizing: border-box; }
+      .video-background {
+        background: #000;
+        position: fixed;
+        top: 0; right: 0; bottom: 0; left: 0;
+        z-index: -99;
+      }
+      .video-foreground,
+      .video-background iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  
+  <body style="background-color:black;">
+<!--<iframe width="1200" height="800" src="https://www.youtube.com/embed/__qSe1b_ukM?autoplay=1&controls=0&loop=1&playlist=__qSe1b_ukM" frameborder="0" allowfullscreen></iframe>-->
+      <div class="video-background">
+      <div class="video-foreground">
+        <iframe src="https://www.youtube.com/embed/__qSe1b_ukM?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist=__qSe1b_ukM&vq=large" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+  
+  
+  </body>
+
+
+
+</html>
