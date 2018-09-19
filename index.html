@@ -2,6 +2,14 @@
 <head>
     <link rel="icon" type="image/x-icon" href="myquotes_icon.png" />
     <script src='https://www.google.com/recaptcha/api.js?render=6Lf5JnEUAAAAAB0_GZLPzHS20j8erwgobrDiBEKJ'></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6Lf5JnEUAAAAAB0_GZLPzHS20j8erwgobrDiBEKJ', {action: 'action_name'})
+            .then(function(token) {
+            ...
+            });
+        });
+    </script>
     <style>
         ul {
             list-style-type: none;
