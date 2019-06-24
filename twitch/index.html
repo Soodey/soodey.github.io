@@ -3,10 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <script>
+        function urlChange() {
+            var channel = document.getElementById('new_channel').value;
+            var site = 'https://player.twitch.tv/?channel='+channel;
+            document.getElementById('mainFrame').src = site;
+        }
+    </script>
 </head>
 <body>
 <div>
-<iframe
+<iframe id="mainFrame"
         src="https://player.twitch.tv/?channel=gamesdonequick"
         height="720"
         width="1280"
@@ -14,6 +22,10 @@
         scrolling="no"
         allowfullscreen="true">
 </iframe>
+    <form>
+        <input id="new_channel" type="text">
+        <input type="submit" value="Update" onclick="urlChange(); return false;" />
+    </form>
 </div>
 
 </body>
