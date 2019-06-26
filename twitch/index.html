@@ -7,7 +7,15 @@
     <script>
         function urlChange() {
             var channel = document.getElementById('new_channel').value;
-            var site = 'https://player.twitch.tv/?channel='+channel;
+            if(/^\d+$/.test(channel) == true)
+            {
+                var site = 'https://player.twitch.tv/?video=v'+channel;
+            }
+            else
+            {
+                var site = 'https://player.twitch.tv/?channel='+channel;
+            }
+
             document.getElementById('mainFrame').src = site;
         }
     </script>
