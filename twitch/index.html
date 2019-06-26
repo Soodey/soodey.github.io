@@ -7,7 +7,8 @@
     <script>
         function urlChange() {
             var channel = document.getElementById('new_channel').value;
-            if(/^\d+$/.test(channel) == true)
+            var isnum = /^\d+$/.test(channel);
+            if(isnum)
             {
                 var site = 'https://player.twitch.tv/?video=v'+channel;
             }
