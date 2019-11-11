@@ -26,7 +26,7 @@ function drawFace(ctx, radius) {
   ctx.arc(0, 0, radius, 0, 2*Math.PI);
   ctx.fillStyle = 'white';
   ctx.fill();
-  ctx.strokeStyle = "#000000";
+  ctx.strokeStyle = '#333';
   ctx.lineWidth = radius*0.05;
   ctx.stroke();
   ctx.beginPath();
@@ -74,7 +74,7 @@ function drawTime(ctx, radius){
 
 }
 
-function drawHand(ctx, pos, length, width, color="#000000") {
+function drawHand(ctx, pos, length, width, color="#222") {
     ctx.beginPath();
     ctx.lineWidth = width;
     ctx.strokeStyle = color;
