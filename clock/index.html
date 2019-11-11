@@ -12,7 +12,7 @@ var ctx = canvas.getContext("2d");
 var radius = canvas.height / 2;
 ctx.translate(radius, radius);
 radius = radius * 0.90
-setInterval(drawClock, 1000);
+setInterval(drawClock, 100);
 
 function drawClock() {
   drawFace(ctx, radius);
@@ -57,15 +57,12 @@ function drawTime(ctx, radius){
     var now = new Date();
     var hour = now.getHours();
     var minute = now.getMinutes();
-    var second = now.getSeconds();
     var millisecond = now.getMilliseconds();
-    console.log(millisecond);
+    var second = now.getSeconds()+(millisecond/1000);
+
       // second
     second=(second*Math.PI/30);
-    millisecond=(millisecond*Math.PI/30000);
   console.log(second);
-  console.log(millisecond);
-  console.log("------");
     drawHand(ctx, second, radius*0.9, radius*0.02, "#FF0000");
   
     //hour
