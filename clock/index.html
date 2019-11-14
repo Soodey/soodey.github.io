@@ -61,9 +61,9 @@ function drawTime(ctx, radius){
     var second = now.getSeconds()+(millisecond/1000);
 
       // second
-    second=(second*Math.PI/30);
+    second_angle=(second*Math.PI/30);
     //console.log(second);
-    drawHand(ctx, second, radius*0.9, radius*0.02, "#FF0000");
+    drawHand(ctx, second_angle, radius*0.9, radius*0.02, "#FF0000");
   
     //hour
     hour=hour%12;
