@@ -1,83 +1,157 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en" dir="ltr">
+<?php
+/**
+ * Created by PhpStorm.
+ * User: stevenhorvat
+ * Date: 7/23/15
+ * Time: 9:48 AM
+ */
+?>
+
+<html>
+
 <head>
-<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-<style>
-@font-face{
-    font-family: "dclock";
-    src: url('digital-7.ttf'),
-}
-blink {
-    -webkit-animation-name: blinker;
-    -webkit-animation-duration: .5s;
-    -webkit-animation-timing-function: linear;
-    -webkit-animation-iteration-count: infinite;
+    <style>
+        @import url(http://fonts.googleapis.com/css?family=Graduate);
+        body, .bg, .bg:before {
+            background: black;
+            -webkit-background-size: cover;
+            background-size: cover;
+        }
 
-    -moz-animation-name: blinker;
-    -moz-animation-duration: .5s;
-    -moz-animation-timing-function: linear;
-    -moz-animation-iteration-count: infinite;
+        .bg, .bg:before, .bg:after {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: block;
+        }
 
-    animation-name: blinker;
-    animation-duration: .5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-}
+        :before, :after {
+            content: '';
+        }
 
-@-moz-keyframes blinker {
-    0% { opacity: 1.0; }
-    50% { opacity: 0.0; }
-    100% { opacity: 1.0; }
-}
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            filter: brightness(60%) contrast(120%) grayscale(15%);
+        }
+        body a {
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 101px;
+            text-align: center;
+            line-height: 101px;
+            font-size: 3em;
+            top: 50%;
+            left: 50%;
+            margin: -50.5px 0 0 -50%;
+            font-family: 'Graduate', cursive;
+            z-index: 5;
+            overflow: hidden;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            text-shadow: #000 3px 3px 5px;
+        }
 
-@-webkit-keyframes blinker {
-    0% { opacity: 1.0; }
-    50% { opacity: 0.0; }
-    100% { opacity: 1.0; }
-}
+        .bg {
+            animation-name: goBlur;
+            animation-duration: 6000ms;
+            animation-fill-mode: both;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
+        .bg:before {
+            opacity: .5;
+            animation-name: goShake;
+            animation-duration: 1200ms;
+            animation-fill-mode: both;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
+        .bg:after {
+            opacity: 0;
+            z-index: 1;
+            background-position: center top;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+            animation-name: goLightning;
+            animation-duration: 3600ms;
+            animation-fill-mode: both;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
 
-@keyframes blinker {
-    0% { opacity: 1.0; }
-    50% { opacity: 0.0; }
-    100% { opacity: 1.0; }
-}
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes goBlur {
+            0%, 20%, 50%, 80%, 100% {
+                filter: blur(0px);
+                -webkit-filter: blur(0px) brightness(80%) contrast(120%) grayscale(15%);
+            }
+            40% {
+                filter: blur(12px);
+                -webkit-filter: blur(3px) brightness(110%) contrast(130%) grayscale(10%);
+            }
+            60% {
+                filter: blur(6px);
+                -webkit-filter: blur(2px) brightness(60%) contrast(120%) grayscale(16%);
+            }
+        }
+        @keyframes goShake {
+            0%, 20%, 50%, 80%, 100% {
+                top: 0;
+                left: 0;
+            }
+            40% {
+                top: -1px;
+                left: -1px;
+            }
+            60% {
+                top: 1px;
+                left: 1px;
+            }
+        }
+        @keyframes goLightning {
+            0%, 20%, 50% {
+                opacity: .5;
+                background-image: url("http://soodey.com/images/7lightning.png");
+            }
+            40%, 80%, 100% {
+                opacity: 0;
+            }
+            60% {
+                opacity: .6;
+                background-color: rgba(0, 0, 0, 0.11);
+                z-index: 10000;
+                background-image: url("http://soodey.com/karl_evil.png");
+            }
+        }
 
-/* Chrome, Safari, Opera */
-@-webkit-keyframes zoom {
-    from {
-        -webkit-transform: scale(1,1);
-    }
-    to {
-        -webkit-transform: scale(2,2);
-    }
-}
 
-/* Standard syntax */
-@keyframes zoom {
-    from {
-        transform: scale(1,1);
-    }
-    to {
-        transform: scale(2,2);
-    }
-}
-
-
-img {
-    -webkit-animation: zoom 60s; /* Chrome, Safari, Opera */
-    animation: zoom 60s;
-}
-</style>
-    <title>Soodey</title>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <script type="text/javascript" src="countdown.js" defer="defer"></script>
+    </style>
 </head>
 
-<div style="font-size:80pt;text-align:center;"></div>
-<div style="text-align:center;"><blink><img src="../karl.jpg"></blink></div>
-
+<body>
+<div class='bg'></div>
+<div class='bg2'></div>
 <div style="display:none;">
-    <iframe width="854" height="510" src="https://www.youtube.com/embed/frR9L7cCHfM?autoplay=1" frameborder="0" allowfullscreen></iframe>
+    <audio controls autoplay loop id="player">
+        <source src="thunder2.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
 </div>
 </body>
 </html>
