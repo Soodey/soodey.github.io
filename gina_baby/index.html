@@ -13,10 +13,14 @@
         var random = Math.random() * weights[weights.length - 1];
 
         for (i = 0; i < weights.length; i++)
+        {
           if (weights[i] > random)
             break;
+        }
 
-          console.log(options);
+
+          console.log(random);
+          console.log(weights);
           console.log(i);
           console.log(options[i]);
         // return options[i].name;
