@@ -31,12 +31,25 @@
         // return options[i].name;
         return 'Vinny';
       }
+      var name_array;
+      function build_name_array(source){
+        for (i = 0; i < source.length; i++)
+        {
+          if(source[i].weight < cutoff)
+          {
+            return;
+          }
+          name_array[i] = source[i].name;
+        }
+
+      }
 
       window.onload = function() {
 
+        build_name_array(name_object);
       var gender = "Boy"
-      var first_name = name_object[Math.floor(Math.random() * name_object.length)].name;
-      var middle_name = name_object[Math.floor(Math.random() * name_object.length)].name;
+      var first_name = name_array[Math.floor(Math.random() * name_array.length)].name;
+      var middle_name = name_array[Math.floor(Math.random() * name_array.length)].name;
       
       document.getElementById("gender").innerHTML=gender;
       document.getElementById("first_name").innerHTML=first_name;
@@ -47,8 +60,8 @@
       function update(){
 
       var gender = "Boy"
-        var first_name = name_object[Math.floor(Math.random() * name_object.length)].name;
-        var middle_name = name_object[Math.floor(Math.random() * name_object.length)].name;
+        var first_name = name_array[Math.floor(Math.random() * name_array.length)].name;
+        var middle_name = name_array[Math.floor(Math.random() * name_array.length)].name;
       
       document.getElementById("gender").innerHTML=gender;
       document.getElementById("first_name").innerHTML=first_name;
