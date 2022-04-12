@@ -33,6 +33,7 @@
       }
       var name_array;
       function build_name_array(source){
+        var cutoff = 50;
         for (i = 0; i < source.length; i++)
         {
           if(source[i].weight < cutoff)
