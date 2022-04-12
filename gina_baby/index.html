@@ -42,8 +42,8 @@
       }
       */
       var gender = "Boy"
-      var first_name = names_array[Math.floor(Math.random() * names_array.length)];
-      var middle_name = names_array[Math.floor(Math.random() * names_array.length)];
+        var first_name = weighted_random(name_object);
+        var middle_name = weighted_random(name_object);
       
       document.getElementById("gender").innerHTML=gender;
       document.getElementById("first_name").innerHTML=first_name;
