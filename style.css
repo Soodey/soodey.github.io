@@ -1,63 +1,40 @@
 body {
-    background-color: #111;
-    color: #ddd;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    overflow: hidden; /* Hide overflow to prevent smoke from extending beyond the viewport */
-}
-
-h1 {
-    font-size: 4em;
-    z-index: 2; /* Ensure the text is above the smoke */
+    background-color: #222; /* Dark background */
 }
 
 .smoke-container {
-    position: relative;
+    position: fixed; /* Stay on top of content */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
+    pointer-events: none; /* Let clicks go through */
 }
 
 .smoke {
     position: absolute;
-    bottom: -50px; /* Start slightly below the container */
-    left: 0;
-    width: 100%;
-    height: 100px; /* Adjust the height as needed */
-}
-
-.smoke:before,
-.smoke:after {
-    content: ''; /* Required for pseudo-elements */
-    position: absolute;
-    top: 0;
-    width: 100px;
-    height: 100px;
-    background-color: #fff; /* Or a light gray color for smoke */
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 80%);
     border-radius: 50%;
-    opacity: 0.6; /* Adjust opacity for desired transparency */
+    opacity: 0;
+    animation: drift 8s infinite linear;
 }
 
-.smoke:before {
-    left: 20%;
-    animation: smokePuff1 5s ease-in-out infinite;
-}
-
-.smoke:after {
-    left: 80%;
-    animation: smokePuff2 5s ease-in-out infinite;
-}
-
-@keyframes smokePuff1 {
-    0% { transform: translate(0, 0) scale(0.5); opacity: 0.3; }
-    50% { transform: translate(50px, -100px) scale(1); opacity: 0.6; }
-    100% { transform: translate(100px, -200px) scale(1.5); opacity: 0; }
-}
-
-@keyframes smokePuff2 {
-    0% { transform: translate(0, 0) scale(0.5); opacity: 0.3; }
-    50% { transform: translate(-50px, -100px) scale(1); opacity: 0.6; }
-    100% { transform: translate(-100px, -200px) scale(1.5); opacity: 0; }
+@keyframes drift {
+    0% {
+        transform: translateX(-100%) translateY(10%);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.4;
+    }
+    80% {
+        opacity: 0.4;
+    }
+    100% {
+        transform: translateX(110%) translateY(-20%);
+        opacity: 0;
+    }
 }
