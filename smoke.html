@@ -36,13 +36,12 @@
     .particle {
       position: absolute;
       bottom: 0;
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      animation: rise 5s linear infinite;
-      clip-path: polygon(0 0, 100% 0, 50% 100%); /* Example of an elongated shape */
-      filter: blur(2px); /* Adjust blur radius as needed */
-      background-color: rgba(200, 200, 200, 0.2); /* Lighter gray with some transparency */
+      width: 20px; /* Increased size */
+      height: 20px; /* Increased size */
+      background-color: rgba(200, 200, 200, 0.2); /* More transparent */
+      opacity: 0.3; /* More transparent */
+      filter: blur(3px); /* Adjust blur radius as needed */
+      animation: rise 7s linear infinite; /* Slightly slower animation */
     }
 
     .particle-long {
@@ -53,13 +52,14 @@
       clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
     }
 
+
     @keyframes rise {
       0% {
         transform: translateY(0) scale(1);
-        opacity: 0.5;
+        opacity: 0.3;
       }
       100% {
-        transform: translateY(-200px) scale(3);
+        transform: translateY(-300px) scale(4); /* Rise higher and scale more */
         opacity: 0;
       }
     }
@@ -84,7 +84,7 @@
     const particle = document.createElement('div');
     particle.classList.add('particle');
 
-    const shapes = ['', 'long', 'irregular']; // Add an empty string to represent no shape
+    const shapes = ['', 'long', 'irregular'];
     const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
     if (randomShape) {
       particle.classList.add('particle-' + randomShape);
@@ -101,12 +101,11 @@
   }
 
   // Create initial particles
-  for (let i = 0; i < 30; i++) { // Adjust number of particles as needed
+  for (let i = 0; i < 30; i++) {
     createSmoke();
   }
 
-  // Create new particles periodically
-  setInterval(createSmoke, 500); // Adjust interval as needed
+  setInterval(createSmoke, 500);
 </script>
 
 </body>
