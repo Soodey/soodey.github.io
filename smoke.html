@@ -41,7 +41,7 @@
       background-color: rgba(200, 200, 200, 0.2);
       opacity: 0.3;
       filter: blur(3px);
-      animation: rise 7s linear infinite;
+      /* animation: rise 7s linear infinite; */ /* Remove the old animation */
     }
 
     .particle-long {
@@ -52,14 +52,13 @@
       clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
     }
 
-
-    @keyframes rise {
+    @keyframes riseCustom {
       0% {
         transform: translateY(0) scale(1);
         opacity: 0.3;
       }
       100% {
-        transform: translateY(-300px) scale(4);
+        transform: translateY(var(--translateY)) scale(4); /* Use CSS variable */
         opacity: 0;
       }
     }
@@ -91,7 +90,15 @@
     }
 
     particle.style.left = Math.random() * 100 + '%';
-    particle.style.animationDelay = Math.random() * 3 + 's';
+
+    // Vary animation duration between 5 and 9 seconds
+    const animationDuration = Math.random() * 4 + 5;
+    particle.style.animationDuration = animationDuration + 's';
+
+    // Vary translateY in the rise animation between -200px and -400px
+    const translateYValue = - (Math.random() * 200 + 200);
+    particle.style.setProperty('--translateY', translateYValue + 'px');
+    particle.style.animationName = 'riseCustom'; // Use a custom animation name
 
     smokeContainer.appendChild(particle);
 
