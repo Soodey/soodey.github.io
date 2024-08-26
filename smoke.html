@@ -36,20 +36,20 @@
     .particle {
       position: absolute;
       bottom: 0;
-      width: 10px;
-      height: 10px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
-      opacity: 0.5;
       animation: rise 5s linear infinite;
       clip-path: polygon(0 0, 100% 0, 50% 100%); /* Example of an elongated shape */
       filter: blur(2px); /* Adjust blur radius as needed */
-      background-color: rgba(200, 200, 200, 0.3); /* Lighter gray with some transparency */
+      background-color: rgba(200, 200, 200, 0.2); /* Lighter gray with some transparency */
     }
-    .particle.long {
+
+    .particle-long {
       clip-path: polygon(0 0, 100% 0, 70% 100%, 30% 100%);
     }
 
-    .particle.irregular {
+    .particle-irregular {
       clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
     }
 
@@ -82,18 +82,19 @@
 
   function createSmoke() {
     const particle = document.createElement('div');
-    const shapes = ['particle', 'particle long', 'particle irregular'];
+    particle.classList.add('particle');
+
+    const shapes = ['', 'long', 'irregular']; // Add an empty string to represent no shape
     const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
-    particle.classList.add(randomShape);
+    if (randomShape) {
+      particle.classList.add('particle-' + randomShape);
+    }
+
     particle.style.left = Math.random() * 100 + '%';
-    particle.style.animationDelay = Math.random() * 3 + 's'; // Vary delay for more natural look
-
-
-
+    particle.style.animationDelay = Math.random() * 3 + 's';
 
     smokeContainer.appendChild(particle);
 
-    // Remove particle after animation ends to improve performance
     particle.addEventListener('animationend', () => {
       particle.remove();
     });
