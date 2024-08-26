@@ -35,9 +35,9 @@
 
     .particle {
       position: absolute;
-      bottom: -100px; /* Start off the screen */
-      width: 100px;
-      height: 100px;
+      bottom: -200px; /* Start off the screen */
+      width: 200px;
+      height: 200px;
       background-color: rgba(200, 200, 200, 0.1);
       opacity: 0.3;
       filter: blur(5px) url(#turbulence);
@@ -86,11 +86,11 @@
     particle.style.left = Math.random() * 100 + '%';
 
     // Vary animation duration between 5 and 9 seconds
-    const animationDuration = Math.random() * 4 + 5;
+    const animationDuration = Math.random() * 4 + 10;
     particle.style.animationDuration = animationDuration + 's';
 
     // Vary translateY in the rise animation between -200px and -400px
-    const translateYValue = - (Math.random() * 200 + 200);
+    const translateYValue = - (Math.random() * 400 + 200);
     particle.style.setProperty('--translateY', translateYValue + 'px');
     particle.style.animationName = 'riseCustom'; // Use a custom animation name
 
@@ -106,7 +106,7 @@
     createSmoke();
   }
 
-  setInterval(createSmoke, 500);
+  setInterval(createSmoke, 200);
 </script>
 
 </body>
