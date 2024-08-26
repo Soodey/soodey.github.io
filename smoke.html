@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soodey - Coming Soon</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #111;
+      color: #ddd;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden; /* Hide overflow for smoke effect */
+    }
+
+    h1 {
+      font-size: 4em;
+    }
+
+    /* Improved Smoke Effect */
+    .smoke-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 150px; /* Adjust height as needed */
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      bottom: 0;
+      width: 10px;
+      height: 10px;
+      background-color: #fff;
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: rise 5s linear infinite;
+    }
+
+    @keyframes rise {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-200px) scale(3);
+        opacity: 0;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="smoke-container"></div>
+
+<div class="container text-center">
+  <h1>Soodey</h1>
+  <p>Something extraordinary is on its way...</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<script>
+  const smokeContainer = document.querySelector('.smoke-container');
+
+  function createSmoke() {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.animationDelay = Math.random() * 3 + 's'; // Vary delay for more natural look
+
+    smokeContainer.appendChild(particle);
+
+    // Remove particle after animation ends to improve performance
+    particle.addEventListener('animationend', () => {
+      particle.remove();
+    });
+  }
+
+  // Create initial particles
+  for (let i = 0; i < 30; i++) { // Adjust number of particles as needed
+    createSmoke();
+  }
+
+  // Create new particles periodically
+  setInterval(createSmoke, 500); // Adjust interval as needed
+</script>
+
+</body>
+</html>
