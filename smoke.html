@@ -38,10 +38,19 @@
       bottom: 0;
       width: 10px;
       height: 10px;
-      background-color: #fff;
       border-radius: 50%;
       opacity: 0.5;
       animation: rise 5s linear infinite;
+      clip-path: polygon(0 0, 100% 0, 50% 100%); /* Example of an elongated shape */
+      filter: blur(2px); /* Adjust blur radius as needed */
+      background-color: rgba(200, 200, 200, 0.3); /* Lighter gray with some transparency */
+    }
+    .particle.long {
+      clip-path: polygon(0 0, 100% 0, 70% 100%, 30% 100%);
+    }
+
+    .particle.irregular {
+      clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
     }
 
     @keyframes rise {
@@ -73,9 +82,14 @@
 
   function createSmoke() {
     const particle = document.createElement('div');
-    particle.classList.add('particle');
+    const shapes = ['particle', 'particle long', 'particle irregular'];
+    const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+    particle.classList.add(randomShape);
     particle.style.left = Math.random() * 100 + '%';
     particle.style.animationDelay = Math.random() * 3 + 's'; // Vary delay for more natural look
+
+
+
 
     smokeContainer.appendChild(particle);
 
