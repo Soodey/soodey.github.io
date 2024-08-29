@@ -56,47 +56,33 @@
             }
         }
 
-        /* Overlay to initially hide the content */
-        .content-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8); /* Adjust opacity as needed */
-            z-index: 1000; /* Ensure it's on top */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
     </style>
 </head>
 <body>
 
 <div class="smoke-container"></div>
 
-<div class="container text-center" id="mainContent">
-    <h1>Soodey</h1>
-    <p>Something extraordinary is on the way...</p>
-</div>
 
-<div class="content-overlay" id="contentOverlay">
-    <div class="modal fade" id="enterModal" tabindex="-1" aria-labelledby="enterModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-dark text-light">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="enterModalLabel">Welcome to Soodey</h1>
-                </div>
-                <div class="modal-body">
-                    <p>Something extraordinary is on the way...</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="enterSite()">Enter</button>
-                </div>
+<div class="modal fade" id="enterModal" tabindex="-1" aria-labelledby="enterModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Enter</button>
             </div>
         </div>
     </div>
+</div>
+
+<script>
+    const myModal = new bootstrap.Modal(document.getElementById('enterModal'), {
+        keyboard: false // Prevent closing with Esc key
+    })
+    myModal.show()
+</script>
+
+<div class="container text-center">
+    <h1>Soodey</h1>
+    <p>Something extraordinary is on the way...</p>
 </div>
 
 <svg style="display: none;">
@@ -139,21 +125,8 @@
     }
 
     setInterval(createSmoke, 200);
-
-    // Audio element
-    const audio = new Audio('assets/audio/intro_music.mp3');
-
-    // Function to enter the site and play audio
-    function enterSite() {
-        audio.play();
-        document.getElementById('contentOverlay').style.display = 'none'; // Hide the overlay
-    }
-
-    // Show modal on page load
-    const enterModal = new bootstrap.Modal(document.getElementById('enterModal'));
-    enterModal.show();
 </script>
-<audio id="myAudio" style="display: none;">
+<audio autoplay style="display: none;">
     <source src="assets/audio/intro_music.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
 </audio>
