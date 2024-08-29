@@ -64,7 +64,7 @@
 <div class="smoke-container"></div>
 
 
-<div class="modal fade" id="enterModal" tabindex="-1" aria-labelledby="enterModalLabel" aria-hidden="true">
+<div class="modal fade" id="enterModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="enterModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content bg-black text-white">
             <div class="modal-body">
@@ -75,10 +75,8 @@
 </div>
 
 <script>
-    const myModal = new bootstrap.Modal(document.getElementById('enterModal'), {
-        keyboard: false // Prevent closing with Esc key
-    })
-    myModal.show()
+    const myModal = new bootstrap.Modal(document.getElementById('enterModal'));
+    myModal.show();
 </script>
 
 <div class="container text-center">
