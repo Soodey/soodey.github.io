@@ -14,6 +14,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
+      overflow: hidden;
     }
     .card {
       background: white;
@@ -28,61 +29,76 @@
       from { opacity: 0; transform: scale(0.9); }
       to { opacity: 1; transform: scale(1); }
     }
-    .btn-boy { background: #3498db; color: white; }
-    .btn-girl { background: #e91e63; color: white; }
-    .fullscreen-reveal {
+    .btn-boy { background: #3498db; color: white; font-size: 1.5rem; padding: 15px 30px; }
+    .btn-girl { background: #e91e63; color: white; font-size: 1.5rem; padding: 15px 30px; }
+    .reveal-card {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.9);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 5rem;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: white;
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+      font-size: 3rem;
       font-weight: bold;
       opacity: 0;
-      transform: scale(0.8);
       transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
       z-index: 10;
+      display: none;
+      cursor: pointer;
     }
     .wobble {
       animation: wobble 1s ease-in-out infinite;
     }
     @keyframes wobble {
-      0%, 100% { transform: rotate(0deg); }
-      25% { transform: rotate(3deg); }
-      50% { transform: rotate(-3deg); }
-      75% { transform: rotate(3deg); }
+      0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+      25% { transform: translate(-50%, -50%) rotate(3deg); }
+      50% { transform: translate(-50%, -50%) rotate(-3deg); }
+      75% { transform: translate(-50%, -50%) rotate(3deg); }
     }
   </style>
 </head>
 <body>
-<div class="card text-center">
-  <h1 class="mb-4">Guess the Baby's Name!</h1>
-  <p>Click below to reveal!</p>
+<div class="card text-center" id="cardContainer">
+  <h1 class="mb-4">Guess the Baby</h1>
   <div class="mt-3">
-    <button class="btn btn-boy m-2 px-4 py-2" onclick="revealName('boy')">It's a Boy</button>
-    <button class="btn btn-girl m-2 px-4 py-2" onclick="revealName('girl')">It's a Girl</button>
+    <button class="btn btn-boy m-2" onclick="revealName('boy')">Boy</button>
+    <button class="btn btn-girl m-2" onclick="revealName('girl')">Girl</button>
   </div>
 </div>
-<div id="fullscreenReveal" class="fullscreen-reveal"></div>
+<div id="revealCard" class="reveal-card" onclick="resetReveal()"></div>
 
 <script>
   function revealName(gender) {
-    const fullscreenReveal = document.getElementById("fullscreenReveal");
+    const revealCard = document.getElementById("revealCard");
+    const cardContainer = document.getElementById("cardContainer");
     if (gender === 'boy') {
-      fullscreenReveal.innerHTML = "Sienno Fox";
-      fullscreenReveal.style.color = "#3498db";
+      revealCard.innerHTML = "Sienno Fox";
+      revealCard.style.color = "#3498db";
     } else {
-      fullscreenReveal.innerHTML = "Sienna Fox Jr.";
-      fullscreenReveal.style.color = "#e91e63";
+      revealCard.innerHTML = "Sienna Fox Jr.";
+      revealCard.style.color = "#e91e63";
     }
-    fullscreenReveal.classList.add("wobble");
-    fullscreenReveal.style.opacity = "1";
-    fullscreenReveal.style.transform = "scale(1)";
+    revealCard.classList.add("wobble");
+    revealCard.style.display = "block";
+    setTimeout(() => {
+      revealCard.style.opacity = "1";
+      revealCard.style.transform = "translate(-50%, -50%) scale(1)";
+    }, 10);
+    cardContainer.style.display = "none";
     launchConfetti();
+  }
+
+  function resetReveal() {
+    const revealCard = document.getElementById("revealCard");
+    const cardContainer = document.getElementById("cardContainer");
+    revealCard.style.opacity = "0";
+    revealCard.style.transform = "translate(-50%, -50%) scale(0.8)";
+    setTimeout(() => {
+      revealCard.style.display = "none";
+      cardContainer.style.display = "block";
+    }, 500);
   }
 
   function launchConfetti() {
