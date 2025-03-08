@@ -63,13 +63,15 @@
 <div class="card text-center" id="cardContainer">
   <h1 class="mb-4">Guess the Baby</h1>
   <div class="mt-3">
-    <button class="btn btn-boy m-2" onclick="revealName('boy')">Boy</button>
-    <button class="btn btn-girl m-2" onclick="revealName('girl')">Girl</button>
+    <button class="btn btn-boy m-2" onclick="revealName('boy')">It's a Boy</button>
+    <button class="btn btn-girl m-2" onclick="revealName('girl')">It's a Girl</button>
   </div>
 </div>
 <div id="revealCard" class="reveal-card" onclick="resetReveal()"></div>
 
 <script>
+  let confettiInterval;
+
   function revealName(gender) {
     const revealCard = document.getElementById("revealCard");
     const cardContainer = document.getElementById("cardContainer");
@@ -87,7 +89,7 @@
       revealCard.style.transform = "translate(-50%, -50%) scale(1)";
     }, 10);
     cardContainer.style.display = "none";
-    launchConfetti();
+    startConfetti();
   }
 
   function resetReveal() {
@@ -98,15 +100,27 @@
     setTimeout(() => {
       revealCard.style.display = "none";
       cardContainer.style.display = "block";
+      stopConfetti();
     }, 500);
   }
 
-  function launchConfetti() {
+  function startConfetti() {
     confetti({
       particleCount: 200,
       spread: 100,
       origin: { y: 0.6 }
     });
+    confettiInterval = setInterval(() => {
+      confetti({
+        particleCount: 200,
+        spread: 100,
+        origin: { y: 0.6 }
+      });
+    }, 3000); // Increased pause duration between bursts
+  }
+
+  function stopConfetti() {
+    clearInterval(confettiInterval);
   }
 </script>
 </body>
