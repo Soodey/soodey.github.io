@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gender Reveal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4, #ffdde1);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 1s ease-in-out;
+      position: relative;
+      z-index: 2;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .btn-boy { background: #3498db; color: white; font-size: 1.5rem; padding: 15px 30px; }
+    .btn-girl { background: #e91e63; color: white; font-size: 1.5rem; padding: 15px 30px; }
+    .reveal-card {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: white;
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+      font-size: 3rem;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+      z-index: 10;
+      display: none;
+      cursor: pointer;
+    }
+    .wobble {
+      animation: wobble 1s ease-in-out infinite;
+    }
+    @keyframes wobble {
+      0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+      25% { transform: translate(-50%, -50%) rotate(3deg); }
+      50% { transform: translate(-50%, -50%) rotate(-3deg); }
+      75% { transform: translate(-50%, -50%) rotate(3deg); }
+    }
+  </style>
+</head>
+<body>
+<div class="card text-center" id="cardContainer">
+  <h1 class="mb-4">Guess the Baby</h1>
+  <div class="mt-3">
+    <button class="btn btn-boy m-2" onclick="revealName('boy')">Boy</button>
+    <button class="btn btn-girl m-2" onclick="revealName('girl')">Girl</button>
+  </div>
+</div>
+<div id="revealCard" class="reveal-card" onclick="resetReveal()"></div>
+
+<script>
+  let confettiInterval;
+
+  function revealName(gender) {
+    const revealCard = document.getElementById("revealCard");
+    const cardContainer = document.getElementById("cardContainer");
+    if (gender === 'boy') {
+      revealCard.innerHTML = "Sienno Fox";
+      revealCard.style.color = "#3498db";
+    } else {
+      revealCard.innerHTML = "Sienna Fox Jr.";
+      revealCard.style.color = "#e91e63";
+    }
+    revealCard.classList.add("wobble");
+    revealCard.style.display = "block";
+    setTimeout(() => {
+      revealCard.style.opacity = "1";
+      revealCard.style.transform = "translate(-50%, -50%) scale(1)";
+    }, 10);
+    cardContainer.style.display = "none";
+    startConfetti();
+  }
+
+  function resetReveal() {
+    const revealCard = document.getElementById("revealCard");
+    const cardContainer = document.getElementById("cardContainer");
+    revealCard.style.opacity = "0";
+    revealCard.style.transform = "translate(-50%, -50%) scale(0.8)";
+    setTimeout(() => {
+      revealCard.style.display = "none";
+      cardContainer.style.display = "block";
+      stopConfetti();
+    }, 500);
+  }
+
+  function startConfetti() {
+    confetti({
+      particleCount: 200,
+      spread: 100,
+      origin: { y: 0.6 }
+    });
+    confettiInterval = setInterval(() => {
+      confetti({
+        particleCount: 200,
+        spread: 100,
+        origin: { y: 0.6 }
+      });
+    }, 3000); // Increased pause duration between bursts
+  }
+
+  function stopConfetti() {
+    clearInterval(confettiInterval);
+  }
+</script>
+</body>
+</html>
+
