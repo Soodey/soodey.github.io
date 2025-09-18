@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zools Baby</title>
+  <title>Zools Baby Generator</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1"></script>
   <style>
@@ -19,9 +19,9 @@
     }
     .card {
       background: white;
-      padding: 30px;
+      padding: 40px;
       border-radius: 20px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0px 4px S10px rgba(0, 0, 0, 0.2);
       animation: fadeIn 1s ease-in-out;
       position: relative;
       z-index: 2;
@@ -30,15 +30,14 @@
       from { opacity: 0; transform: scale(0.9); }
       to { opacity: 1; transform: scale(1); }
     }
-    .btn {
-        font-size: 1.5rem;
-        padding: 15px 30px;
+    .btn-generate {
+        font-size: 2rem;
+        padding: 20px 40px;
         border: none;
+        background-color: #5e72e4;
+        color: white;
+        font-weight: bold;
     }
-    .btn-boy { background: #3498db; color: white; }
-    .btn-girl { background: #e91e63; color: white; }
-    .btn-unknown { background: #9b59b6; color: white; }
-
     .reveal-card {
       position: fixed;
       top: 50%;
@@ -48,7 +47,6 @@
       padding: 50px;
       border-radius: 20px;
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-      font-size: 2.5rem;
       font-weight: bold;
       opacity: 0;
       transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
@@ -70,12 +68,10 @@
 </head>
 <body>
 <div class="card text-center" id="cardContainer">
-  <h1 class="mb-4">Zools Baby</h1>
-  <p class="text-muted">What will it be?</p>
-  <div class="mt-3">
-    <button class="btn btn-boy m-2" onclick="revealName('boy')">Boy</button>
-    <button class="btn btn-girl m-2" onclick="revealName('girl')">Girl</button>
-    <button class="btn btn-unknown m-2" onclick="revealName('unknown')">?</button>
+  <h1 class="mb-4">Zools Baby Generator</h1>
+  <p class="text-muted fs-5">Click the button to create a new zooling!</p>
+  <div class="mt-4">
+    <button class="btn btn-generate" onclick="generateZooling()">New Zooling</button>
   </div>
 </div>
 <div id="revealCard" class="reveal-card" onclick="resetReveal()"></div>
@@ -84,172 +80,94 @@
   // Data parsed from dota.csv
   const heroes = {
     boy: [
-        { name: 'Abaddon', title: 'Lord of Avernus' },
-        { name: 'Alchemist', title: 'Razzil Darkbrew' },
-        { name: 'Ancient Apparition', title: 'Kaldr' },
-        { name: 'Anti-Mage', title: 'Magina' },
-        { name: 'Arc Warden', title: 'Zet' },
-        { name: 'Axe', title: 'Mogul Khan' },
-        { name: 'Batrider', title: 'Jin\'zakk' },
-        { name: 'Beastmaster', title: 'Karroch' },
-        { name: 'Bloodseeker', title: 'Strygwyr' },
-        { name: 'Bounty Hunter', title: 'Gondar' },
-        { name: 'Brewmaster', title: 'Mangix' },
-        { name: 'Bristleback', title: 'Rigwarl' },
-        { name: 'Centaur Warrunner', title: 'Bradwarden' },
-        { name: 'Chaos Knight', title: 'Nessaj' },
-        { name: 'Chen', title: 'Chen' },
-        { name: 'Clinkz', title: 'Clinkz' },
-        { name: 'Clockwerk', title: 'Rattletrap' },
-        { name: 'Dark Seer', title: 'Ish\'Kafel' },
-        { name: 'Dazzle', title: 'Dazzle' },
-        { name: 'Disruptor', title: 'Thrall' },
-        { name: 'Doom', title: 'Lucifer' },
-        { name: 'Dragon Knight', title: 'Davion' },
-        { name: 'Earth Spirit', title: 'Kaolin' },
-        { name: 'Earthshaker', title: 'Raigor Stonehoof' },
-        { name: 'Elder Titan', title: 'Elder Titan' },
-        { name: 'Ember Spirit', title: 'Xin' },
-        { name: 'Faceless Void', title: 'Darkterror' },
-        { name: 'Grimstroke', title: 'Grimstroke' },
-        { name: 'Gyrocopter', title: 'Aurel' },
-        { name: 'Huskar', title: 'Huskar' },
-        { name: 'Invoker', title: 'Carl' },
-        { name: 'Jakiro', title: 'Jakiro' },
-        { name: 'Juggernaut', title: 'Yurnero' },
-        { name: 'Keeper of the Light', title: 'Ezalor' },
-        { name: 'Kunkka', title: 'Kunkka' },
-        { name: 'Leshrac', title: 'Leshrac the Tormented Soul' },
-        { name: 'Lich', title: 'Ethreain' },
-        { name: 'Lifestealer', title: 'N\'aix' },
-        { name: 'Lion', title: 'Lion' },
-        { name: 'Lone Druid', title: 'Sylla' },
-        { name: 'Lycan', title: 'Banehallow' },
-        { name: 'Magnus', title: 'Magnus' },
-        { name: 'Mars', title: 'Mars' },
-        { name: 'Meepo', title: 'Meepo' },
-        { name: 'Monkey King', title: 'Sun Wukong' },
-        { name: 'Nature\'s Prophet', title: 'Furion' },
-        { name: 'Necrophos', title: 'Rotund\'jere' },
-        { name: 'Night Stalker', title: 'Balanar' },
-        { name: 'Nyx Assassin', title: 'Nyx Assassin' },
-        { name: 'Ogre Magi', title: 'Aggron Stonebreak' },
-        { name: 'Omniknight', title: 'Purist Thunderwrath' },
-        { name: 'Oracle', title: 'Nerif' },
-        { name: 'Outworld Destroyer', title: 'Harbinger' },
-        { name: 'Pangolier', title: 'Donté Panlin' },
-        { name: 'Phantom Lancer', title: 'Azwraith' },
-        { name: 'Primal Beast', title: 'Primal Beast' },
-        { name: 'Pudge', title: 'Pudge' },
-        { name: 'Pugna', title: 'Pugna' },
-        { name: 'Razor', title: 'Razor' },
-        { name: 'Riki', title: 'Riki' },
-        { name: 'Ringmaster', title: 'Ringmaster' },
-        { name: 'Rubick', title: 'Rubick' },
-        { name: 'Sand King', title: 'Crixalis' },
-        { name: 'Shadow Demon', title: 'Shadow Demon' },
-        { name: 'Shadow Fiend', title: 'Nevermore' },
-        { name: 'Shadow Shaman', title: 'Rhasta' },
-        { name: 'Silencer', title: 'Nortrom' },
-        { name: 'Skywrath Mage', title: 'Dragonus' },
-        { name: 'Slardar', title: 'Slardar' },
-        { name: 'Slark', title: 'Slark' },
-        { name: 'Sniper', title: 'Kardel Sharpeye' },
-        { name: 'Spirit Breaker', title: 'Barathrum' },
-        { name: 'Storm Spirit', title: 'Raijin Thunderkeg' },
-        { name: 'Sven', title: 'Sven' },
-        { name: 'Techies', title: '"Squee, Spleen, and Spoon"' },
-        { name: 'Terrorblade', title: 'Terrorblade' },
-        { name: 'Tidehunter', title: 'Leviathan' },
-        { name: 'Timbersaw', title: 'Rizzrack' },
-        { name: 'Tinker', title: 'Boush' },
-        { name: 'Tiny', title: 'Tiny' },
-        { name: 'Treant Protector', title: 'Rooftrellen' },
-        { name: 'Troll Warlord', title: 'Jah\'rakal' },
-        { name: 'Tusk', title: 'Ymir' },
-        { name: 'Underlord', title: 'Vrogros' },
-        { name: 'Undying', title: 'Dirge' },
-        { name: 'Ursa', title: 'Ulfsaar' },
-        { name: 'Venomancer', title: 'Lesale Deathbringer' },
-        { name: 'Viper', title: 'Viper' },
-        { name: 'Visage', title: 'Visage' },
-        { name: 'Void Spirit', title: 'Inai' },
-        { name: 'Warlock', title: 'Demnok Lannik' },
-        { name: 'Weaver', title: 'Skitskurr' },
-        { name: 'Witch Doctor', title: 'Zharvakko' },
-        { name: 'Wraith King', title: 'Ostarion' },
-        { name: 'Zeus', title: 'Zeus' }
+        { name: 'Abaddon', title: 'Lord of Avernus' }, { name: 'Alchemist', title: 'Razzil Darkbrew' }, { name: 'Ancient Apparition', title: 'Kaldr' },
+        { name: 'Anti-Mage', title: 'Magina' }, { name: 'Arc Warden', title: 'Zet' }, { name: 'Axe', title: 'Mogul Khan' },
+        { name: 'Batrider', title: 'Jin\'zakk' }, { name: 'Beastmaster', title: 'Karroch' }, { name: 'Bloodseeker', title: 'Strygwyr' },
+        { name: 'Bounty Hunter', title: 'Gondar' }, { name: 'Brewmaster', title: 'Mangix' }, { name: 'Bristleback', title: 'Rigwarl' },
+        { name: 'Centaur Warrunner', title: 'Bradwarden' }, { name: 'Chaos Knight', title: 'Nessaj' }, { name: 'Chen', title: 'Chen' },
+        { name: 'Clinkz', title: 'Clinkz' }, { name: 'Clockwerk', title: 'Rattletrap' }, { name: 'Dark Seer', title: 'Ish\'Kafel' },
+        { name: 'Dazzle', title: 'Dazzle' }, { name: 'Disruptor', title: 'Thrall' }, { name: 'Doom', title: 'Lucifer' },
+        { name: 'Dragon Knight', title: 'Davion' }, { name: 'Earth Spirit', title: 'Kaolin' }, { name: 'Earthshaker', title: 'Raigor Stonehoof' },
+        { name: 'Elder Titan', title: 'Elder Titan' }, { name: 'Ember Spirit', title: 'Xin' }, { name: 'Faceless Void', title: 'Darkterror' },
+        { name: 'Grimstroke', title: 'Grimstroke' }, { name: 'Gyrocopter', title: 'Aurel' }, { name: 'Huskar', title: 'Huskar' },
+        { name: 'Invoker', title: 'Carl' }, { name: 'Jakiro', title: 'Jakiro' }, { name: 'Juggernaut', title: 'Yurnero' },
+        { name: 'Keeper of the Light', title: 'Ezalor' }, { name: 'Kunkka', title: 'Kunkka' }, { name: 'Leshrac', title: 'Leshrac the Tormented Soul' },
+        { name: 'Lich', title: 'Ethreain' }, { name: 'Lifestealer', title: 'N\'aix' }, { name: 'Lion', title: 'Lion' },
+        { name: 'Lone Druid', title: 'Sylla' }, { name: 'Lycan', title: 'Banehallow' }, { name: 'Magnus', title: 'Magnus' },
+        { name: 'Mars', title: 'Mars' }, { name: 'Meepo', title: 'Meepo' }, { name: 'Monkey King', title: 'Sun Wukong' },
+        { name: 'Nature\'s Prophet', title: 'Furion' }, { name: 'Necrophos', title: 'Rotund\'jere' }, { name: 'Night Stalker', title: 'Balanar' },
+        { name: 'Nyx Assassin', title: 'Nyx Assassin' }, { name: 'Ogre Magi', title: 'Aggron Stonebreak' }, { name: 'Omniknight', title: 'Purist Thunderwrath' },
+        { name: 'Oracle', title: 'Nerif' }, { name: 'Outworld Destroyer', title: 'Harbinger' }, { name: 'Pangolier', title: 'Donté Panlin' },
+        { name: 'Phantom Lancer', title: 'Azwraith' }, { name: 'Primal Beast', title: 'Primal Beast' }, { name: 'Pudge', title: 'Pudge' },
+        { name: 'Pugna', title: 'Pugna' }, { name: 'Razor', title: 'Razor' }, { name: 'Riki', title: 'Riki' },
+        { name: 'Ringmaster', title: 'Ringmaster' }, { name: 'Rubick', title: 'Rubick' }, { name: 'Sand King', title: 'Crixalis' },
+        { name: 'Shadow Demon', title: 'Shadow Demon' }, { name: 'Shadow Fiend', title: 'Nevermore' }, { name: 'Shadow Shaman', title: 'Rhasta' },
+        { name: 'Silencer', title: 'Nortrom' }, { name: 'Skywrath Mage', title: 'Dragonus' }, { name: 'Slardar', title: 'Slardar' },
+        { name: 'Slark', title: 'Slark' }, { name: 'Sniper', title: 'Kardel Sharpeye' }, { name: 'Spirit Breaker', title: 'Barathrum' },
+        { name: 'Storm Spirit', title: 'Raijin Thunderkeg' }, { name: 'Sven', title: 'Sven' }, { name: 'Techies', title: '"Squee, Spleen, and Spoon"' },
+        { name: 'Terrorblade', title: 'Terrorblade' }, { name: 'Tidehunter', title: 'Leviathan' }, { name: 'Timbersaw', title: 'Rizzrack' },
+        { name: 'Tinker', title: 'Boush' }, { name: 'Tiny', title: 'Tiny' }, { name: 'Treant Protector', title: 'Rooftrellen' },
+        { name: 'Troll Warlord', title: 'Jah\'rakal' }, { name: 'Tusk', title: 'Ymir' }, { name: 'Underlord', title: 'Vrogros' },
+        { name: 'Undying', title: 'Dirge' }, { name: 'Ursa', title: 'Ulfsaar' }, { name: 'Venomancer', title: 'Lesale Deathbringer' },
+        { name: 'Viper', title: 'Viper' }, { name: 'Visage', title: 'Visage' }, { name: 'Void Spirit', title: 'Inai' },
+        { name: 'Warlock', title: 'Demnok Lannik' }, { name: 'Weaver', title: 'Skitskurr' }, { name: 'Witch Doctor', title: 'Zharvakko' },
+        { name: 'Wraith King', title: 'Ostarion' }, { name: 'Zeus', title: 'Zeus' }
     ],
     girl: [
-        { name: 'Broodmother', title: 'Black Arachnia' },
-        { name: 'Crystal Maiden', title: 'Rylai' },
-        { name: 'Dark Willow', title: 'Mireska Sunbreeze' },
-        { name: 'Dawnbreaker', title: 'Valora' },
-        { name: 'Death Prophet', title: 'Krobelus' },
-        { name: 'Drow Ranger', title: 'Traxex' },
-        { name: 'Enchantress', title: 'Aiushtha' },
-        { name: 'Hoodwink', title: 'Hoodwink' },
-        { name: 'Legion Commander', title: 'Tresdin' },
-        { name: 'Lina', title: 'Lina' },
-        { name: 'Luna', title: 'Luna' },
-        { name: 'Marci', title: 'Marci' },
-        { name: 'Medusa', title: 'Medusa' },
-        { name: 'Mirana', title: 'Mirana' },
-        { name: 'Muerta', title: 'Muerta' },
-        { name: 'Naga Siren', title: 'Slithice' },
-        { name: 'Phantom Assassin', title: 'Mortred' },
-        { name: 'Queen of Pain', title: 'Akasha' },
-        { name: 'Snapfire', title: 'Beatrix Snapfire' },
-        { name: 'Spectre', title: 'Mercurial' },
-        { name: 'Templar Assassin', title: 'Lanaya' },
-        { name: 'Vengeful Spirit', title: 'Shendelzare' },
-        { name: 'Windranger', title: 'Lyralei' },
-        { name: 'Winter Wyvern', title: 'Auroth' }
+        { name: 'Broodmother', title: 'Black Arachnia' }, { name: 'Crystal Maiden', title: 'Rylai' }, { name: 'Dark Willow', title: 'Mireska Sunbreeze' },
+        { name: 'Dawnbreaker', title: 'Valora' }, { name: 'Death Prophet', title: 'Krobelus' }, { name: 'Drow Ranger', title: 'Traxex' },
+        { name: 'Enchantress', title: 'Aiushtha' }, { name: 'Hoodwink', title: 'Hoodwink' }, { name: 'Legion Commander', title: 'Tresdin' },
+        { name: 'Lina', title: 'Lina' }, { name: 'Luna', title: 'Luna' }, { name: 'Marci', title: 'Marci' },
+        { name: 'Medusa', title: 'Medusa' }, { name: 'Mirana', title: 'Mirana' }, { name: 'Muerta', title: 'Muerta' },
+        { name: 'Naga Siren', title: 'Slithice' }, { name: 'Phantom Assassin', title: 'Mortred' }, { name: 'Queen of Pain', title: 'Akasha' },
+        { name: 'Snapfire', title: 'Beatrix Snapfire' }, { name: 'Spectre', title: 'Mercurial' }, { name: 'Templar Assassin', title: 'Lanaya' },
+        { name: 'Vengeful Spirit', title: 'Shendelzare' }, { name: 'Windranger', title: 'Lyralei' }, { name: 'Winter Wyvern', title: 'Auroth' }
     ],
     unknown: [
-        { name: 'Bane', title: 'Atropos' },
-        { name: 'Enigma', title: 'Enigma' },
-        { name: 'Io', title: 'Io' },
-        { name: 'Morphling', title: 'Morphling' },
-        { name: 'Phoenix', title: 'Phoenix' },
-        { name: 'Puck', title: 'Puck' }
+        { name: 'Bane', title: 'Atropos' }, { name: 'Enigma', title: 'Enigma' }, { name: 'Io', title: 'Io' },
+        { name: 'Morphling', title: 'Morphling' }, { name: 'Phoenix', title: 'Phoenix' }, { name: 'Puck', title: 'Puck' }
     ]
   };
 
   let confettiInterval;
 
-  function revealName(gender) {
+  function generateZooling() {
+    // Determine gender with weighted probability
+    const rand = Math.random();
+    let message, color, heroPool;
+
+    if (rand < 0.50) { // 50% chance
+        message = "IT'S A BOY!";
+        color = "#3498db";
+        heroPool = heroes.boy;
+    } else if (rand < 0.90) { // 40% chance
+        message = "IT'S A GIRL!";
+        color = "#e91e63";
+        heroPool = heroes.girl;
+    } else { // 10% chance
+        message = "IT'S....confusing";
+        color = "#9b59b6";
+        heroPool = heroes.unknown;
+    }
+
+    // Pick a random hero for the title
+    const heroForTitle = heroPool[Math.floor(Math.random() * heroPool.length)];
+    // Pick another random hero for the name
+    const heroForName = heroPool[Math.floor(Math.random() * heroPool.length)];
+    // Construct the name
+    const finalName = `${heroForTitle.title} "${heroForName.name}" Stellwagen`;
+
+    // Format the output for the reveal card
+    const revealContent = `
+        <h2 style="margin-bottom: 1.5rem; font-size: 2.5rem;">${message}</h2>
+        <p style="font-size: 1.75rem; font-weight: normal; line-height: 1.2;">${finalName}</p>
+    `;
+
+    // Show the reveal card and start animations/confetti
     const revealCard = document.getElementById("revealCard");
     const cardContainer = document.getElementById("cardContainer");
     
-    let heroPool = [];
-    let color = "#6c757d";
-
-    switch(gender) {
-        case 'boy':
-            heroPool = heroes.boy;
-            color = "#3498db";
-            break;
-        case 'girl':
-            heroPool = heroes.girl;
-            color = "#e91e63";
-            break;
-        case 'unknown':
-            heroPool = heroes.unknown;
-            color = "#9b59b6";
-            break;
-    }
-
-    // *** UPDATED LOGIC HERE ***
-    // Pick a random hero for the title
-    const heroForTitle = heroPool[Math.floor(Math.random() * heroPool.length)];
-    // Pick a different random hero for the name
-    const heroForName = heroPool[Math.floor(Math.random() * heroPool.length)];
-    
-    // Construct the final name from the two separate random picks
-    const finalName = `${heroForTitle.title} "${heroForName.name}" Stellwagen`;
-    
-    revealCard.innerHTML = finalName;
+    revealCard.innerHTML = revealContent;
     revealCard.style.color = color;
     
     revealCard.classList.add("wobble");
