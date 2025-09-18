@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -244,8 +243,8 @@
     const randomIndex = Math.floor(Math.random() * heroPool.length);
     const randomHero = heroPool[randomIndex];
     
-    // Format: {Random Hero Name} "Random Title" Stellwagen
-    const finalName = `${randomHero.name} "${randomHero.title}" Stellwagen`;
+    [cite_start]// CORRECTED FORMAT: {Random Title} "{Random Hero Name}" Stellwagen [cite: 1]
+    const finalName = `${randomHero.title} "${randomHero.name}" Stellwagen`;
     
     revealCard.innerHTML = finalName;
     revealCard.style.color = color;
