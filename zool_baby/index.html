@@ -81,7 +81,7 @@
 <div id="revealCard" class="reveal-card" onclick="resetReveal()"></div>
 
 <script>
-  [cite_start]// Data parsed from dota.csv [cite: 1]
+  // Data parsed from dota.csv
   const heroes = {
     boy: [
         { name: 'Abaddon', title: 'Lord of Avernus' },
@@ -243,7 +243,7 @@
     const randomIndex = Math.floor(Math.random() * heroPool.length);
     const randomHero = heroPool[randomIndex];
     
-    [cite_start]// CORRECTED FORMAT: {Random Title} "{Random Hero Name}" Stellwagen [cite: 1]
+    // Format: {Random Title} "{Random Hero Name}" Stellwagen
     const finalName = `${randomHero.title} "${randomHero.name}" Stellwagen`;
     
     revealCard.innerHTML = finalName;
