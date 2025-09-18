@@ -48,6 +48,7 @@
         background-color: #4a5ac8;
         transform: translateY(-3px);
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        color: white; /* Fixes text color on hover */
     }
     .reveal-card {
       position: fixed;
@@ -59,7 +60,7 @@
       padding: 50px;
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      box-schadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
       font-weight: bold;
       opacity: 0;
       transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
@@ -89,7 +90,6 @@
 <div id="revealCard" class="reveal-card" onclick="resetReveal()"></div>
 
 <script>
-  // *** EXPANDED HERO DATA STRUCTURE ***
   const heroes = {
     boy: [
         { common_name: 'Abaddon', name: 'Abaddon', title: 'The Lord of Avernus' }, { common_name: 'Alchemist', name: 'Razzil Darkbrew', title: 'The Alchemist' },
@@ -184,8 +184,14 @@
     const heroForTitle = heroPool[Math.floor(Math.random() * heroPool.length)];
     const heroForName = heroPool[Math.floor(Math.random() * heroPool.length)];
     
-    // Construct the name using the explicit 'common_name' property
-    const finalName = `${heroForTitle.title} "${heroForName.common_name}" Stellwagen`;
+    // *** NEW LOGIC: Determine the name to use, with a fallback to common_name ***
+    let nameToUse = heroForName.name;
+    if (nameToUse === '---' || !nameToUse) {
+        nameToUse = heroForName.common_name;
+    }
+
+    // Construct the new name format
+    const finalName = `${nameToUse} "${heroForTitle.title}" Stellwagen`;
 
     const revealContent = `
         <h2 style="margin-bottom: 1.5rem; font-size: 2.5rem; font-weight: 700;">${message}</h2>
