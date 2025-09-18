@@ -240,11 +240,14 @@
             break;
     }
 
-    const randomIndex = Math.floor(Math.random() * heroPool.length);
-    const randomHero = heroPool[randomIndex];
+    // *** UPDATED LOGIC HERE ***
+    // Pick a random hero for the title
+    const heroForTitle = heroPool[Math.floor(Math.random() * heroPool.length)];
+    // Pick a different random hero for the name
+    const heroForName = heroPool[Math.floor(Math.random() * heroPool.length)];
     
-    // Format: {Random Title} "{Random Hero Name}" Stellwagen
-    const finalName = `${randomHero.title} "${randomHero.name}" Stellwagen`;
+    // Construct the final name from the two separate random picks
+    const finalName = `${heroForTitle.title} "${heroForName.name}" Stellwagen`;
     
     revealCard.innerHTML = finalName;
     revealCard.style.color = color;
