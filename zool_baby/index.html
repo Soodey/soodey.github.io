@@ -48,7 +48,7 @@
         background-color: #4a5ac8;
         transform: translateY(-3px);
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        color: white; /* Fixes text color on hover */
+        color: white;
     }
     .reveal-card {
       position: fixed;
@@ -60,7 +60,7 @@
       padding: 50px;
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.2);
-      box-schadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
       font-weight: bold;
       opacity: 0;
       transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
@@ -92,72 +92,72 @@
 <script>
   const heroes = {
     boy: [
-        { common_name: 'Abaddon', name: 'Abaddon', title: 'The Lord of Avernus' }, { common_name: 'Alchemist', name: 'Razzil Darkbrew', title: 'The Alchemist' },
-        { common_name: 'Ancient Apparition', name: 'Kaldr', title: 'The Ancient Apparition' }, { common_name: 'Axe', name: 'Mogul Khan', title: 'The Axe' },
-        { common_name: 'Batrider', name: '---', title: 'The Batrider' }, { common_name: 'Beastmaster', name: 'Karroch', title: 'The Beastmaster' },
-        { common_name: 'Bloodseeker', name: 'Strygwyr', title: 'The Bloodseeker' }, { common_name: 'Bounty Hunter', name: 'Gondar', title: 'The Bounty Hunter' },
-        { common_name: 'Brewmaster', name: 'Mangix', title: 'The Brewmaster' }, { common_name: 'Bristleback', name: 'Rigwarl', title: 'The Bristleback' },
-        { common_name: 'Centaur Warrunner', name: 'Bradwarden', title: 'The Centaur Warrunner' }, { common_name: 'Chaos Knight', name: 'Nessaj', title: 'The Chaos Knight' },
-        { common_name: 'Chen', name: 'Chen', title: 'The Holy Knight' }, { common_name: 'Clinkz', name: 'Clinkz', title: 'The Bone Fletcher' },
-        { common_name: 'Clockwerk', name: 'Rattletrap', title: 'The Clockwerk' }, { common_name: 'Dark Seer', name: 'Ish\'Kafel', title: 'The Dark Seer' },
-        { common_name: 'Dazzle', name: '---', title: 'The Shadow Priest' }, { common_name: 'Disruptor', name: '---', title: 'The Stormcrafter' },
-        { common_name: 'Doom', name: 'Lucifer', title: 'The Doom' }, { common_name: 'Dragon Knight', name: 'Davion', title: 'The Dragon Knight' },
-        { common_name: 'Earth Spirit', name: 'Kaolin', title: 'The Earth Spirit' }, { common_name: 'Earthshaker', name: 'Raigor Stonehoof', title: 'The Earthshaker' },
-        { common_name: 'Elder Titan', name: '---', title: 'The Worldsmith' }, { common_name: 'Ember Spirit', name: 'Xin', title: 'The Ember Spirit' },
-        { common_name: 'Faceless Void', name: 'Darkterror', title: 'The Faceless Void' }, { common_name: 'Grimstroke', name: '---', title: 'The Grimstroke' },
-        { common_name: 'Gyrocopter', name: 'Aurel', title: 'The Gyrocopter' }, { common_name: 'Huskar', name: '---', title: 'The Sacred Warrior' },
-        { common_name: 'Invoker', name: 'Carl', title: 'The Invoker' }, { common_name: 'Jakiro', name: 'Jakiro', title: 'The Twin Head Dragon' },
-        { common_name: 'Juggernaut', name: 'Yurnero', title: 'The Juggernaut' }, { common_name: 'Keeper of the Light', name: 'Ezalor', title: 'Keeper of the Light' },
-        { common_name: 'Kunkka', name: '---', title: 'The Admiral' }, { common_name: 'Leshrac', name: 'Leshrac', title: 'The Tormented Soul' },
-        { common_name: 'Lich', name: 'Ethreain', title: 'The Lich' }, { common_name: 'Lifestealer', name: 'N\'aix', title: 'The Lifestealer' },
-        { common_name: 'Lion', name: 'Lion', title: 'The Demon Witch' }, { common_name: 'Lone Druid', name: 'Sylla', title: 'The Lone Druid' },
-        { common_name: 'Lycan', name: 'Banehallow', title: 'The Lycan' }, { common_name: 'Magnus', name: 'Magnus', title: 'The Magnoceros' },
-        { common_name: 'Mars', name: 'Mars', title: 'The First Son of Heaven' }, { common_name: 'Meepo', name: 'Meepo', title: 'The Geomancer' },
-        { common_name: 'Monkey King', name: 'Sun Wukong', title: 'The Monkey King' }, { common_name: 'Nature\'s Prophet', name: 'Tequoia', title: 'The Nature\'s Prophet' },
-        { common_name: 'Necrophos', name: 'Rotund\'jere', title: 'The Necrophos' }, { common_name: 'Night Stalker', name: 'Balanar', title: 'The Night Stalker' },
-        { common_name: 'Nyx Assassin', name: '---', title: 'The Nyx Assassin' }, { common_name: 'Ogre Magi', name: 'Aggron Stonebreak', title: 'The Ogre Magi' },
-        { common_name: 'Omniknight', name: 'Purist Thunderwrath', title: 'The Omniknight' }, { common_name: 'Oracle', name: 'Nerif', title: 'The Oracle' },
-        { common_name: 'Pangolier', name: 'Donté Panlin', title: 'The Pangolier' }, { common_name: 'Phantom Lancer', name: 'Azwraith', title: 'The Phantom Lancer' },
-        { common_name: 'Primal Beast', name: '---', title: 'The Primal Beast' }, { common_name: 'Pudge', name: '---', title: 'The Butcher' },
-        { common_name: 'Pugna', name: 'Pugna', title: 'The Pugna' }, { common_name: 'Riki', name: 'Riki', title: 'The Stealth Assassin' },
-        { common_name: 'Ringmaster', name: '---', title: 'The Ringmaster' }, { common_name: 'Rubick', name: 'Rubick', title: 'The Grand Magus' },
-        { common_name: 'Sand King', name: 'Crixalis', title: 'The Sand King' }, { common_name: 'Shadow Demon', name: '---', title: 'The Shadow Demon' },
-        { common_name: 'Shadow Shaman', name: 'Rhasta', title: 'The Shadow Shaman' }, { common_name: 'Silencer', name: 'Nortrom', title: 'The Silencer' },
-        { common_name: 'Skywrath Mage', name: 'Dragonus', title: 'The Skywrath Mage' }, { common_name: 'Slardar', name: 'Slardar', title: 'The Slithereen Guard' },
-        { common_name: 'Slark', name: 'Slark', title: 'The Nightcrawler' }, { common_name: 'Sniper', name: 'Kardel Sharpeye', title: 'The Sniper' },
-        { common_name: 'Spirit Breaker', name: 'Barathrum', title: 'The Spirit Breaker' }, { common_name: 'Storm Spirit', name: 'Raijin Thunderkeg', title: 'The Storm Spirit' },
-        { common_name: 'Sven', name: 'Sven', title: 'The Rogue Knight' }, { common_name: 'Techies', name: 'Squee, Spleen, and Spoon', title: 'The Techies' },
-        { common_name: 'Terrorblade', name: 'Terrorblade', title: 'The Demon Marauder' }, { common_name: 'Tidehunter', name: 'Leviathan', title: 'The Tidehunter' },
-        { common_name: 'Timbersaw', name: 'Rizzrack', title: 'The Timbersaw' }, { common_name: 'Tinker', name: 'Boush', title: 'The Tinker' },
-        { common_name: 'Tiny', name: 'Tiny', title: 'The Stone Giant' }, { common_name: 'Treant Protector', name: 'Rooftrellen', title: 'The Treant Protector' },
-        { common_name: 'Troll Warlord', name: 'Jah\'rakal', title: 'The Troll Warlord' }, { common_name: 'Tusk', name: 'Ymir', title: 'The Tusk' },
-        { common_name: 'Underlord', name: 'Vrogros', title: 'The Abyssal Underlord' }, { common_name: 'Undying', name: '---', title: 'The Almighty Dirge' },
-        { common_name: 'Ursa', name: 'Ulfsaar', title: 'The Ursa Warrior' }, { common_name: 'Venomancer', name: 'Lesale', title: 'The Venomancer' },
-        { common_name: 'Viper', name: 'Viper', title: 'The Netherdrake' }, { common_name: 'Visage', name: '---', title: 'The Necro\'lic' },
-        { common_name: 'Void Spirit', name: 'Inai', title: 'The Void Spirit' }, { common_name: 'Warlock', name: 'Demnok Lannik', title: 'The Warlock' },
-        { common_name: 'Weaver', name: 'Skitskurr', title: 'The Weaver' }, { common_name: 'Witch Doctor', name: 'Zharvakko', title: 'The Witch Doctor' },
-        { common_name: 'Wraith King', name: 'Ostarion', title: 'The Wraith King' }, { common_name: 'Zeus', name: 'Zeus', title: 'The Lord of Heaven' }
+        { common_name: 'Abaddon', name: 'Abaddon', title: 'Lord of Avernus' }, { common_name: 'Alchemist', name: 'Razzil Darkbrew', title: 'Alchemist' },
+        { common_name: 'Ancient Apparition', name: 'Kaldr', title: 'Ancient Apparition' }, { common_name: 'Axe', name: 'Mogul Khan', title: 'Axe' },
+        { common_name: 'Batrider', name: '', title: 'Batrider' }, { common_name: 'Beastmaster', name: 'Karroch', title: 'Beastmaster' },
+        { common_name: 'Bloodseeker', name: 'Strygwyr', title: 'Bloodseeker' }, { common_name: 'Bounty Hunter', name: 'Gondar', title: 'Bounty Hunter' },
+        { common_name: 'Brewmaster', name: 'Mangix', title: 'Brewmaster' }, { common_name: 'Bristleback', name: 'Rigwarl', title: 'Bristleback' },
+        { common_name: 'Centaur Warrunner', name: 'Bradwarden', title: 'Centaur Warrunner' }, { common_name: 'Chaos Knight', name: 'Nessaj', title: 'Chaos Knight' },
+        { common_name: 'Chen', name: 'Chen', title: 'Holy Knight' }, { common_name: 'Clinkz', name: 'Clinkz', title: 'Bone Fletcher' },
+        { common_name: 'Clockwerk', name: 'Rattletrap', title: 'Clockwerk' }, { common_name: 'Dark Seer', name: 'Ish\'Kafel', title: 'Dark Seer' },
+        { common_name: 'Dazzle', name: '', title: 'Shadow Priest' }, { common_name: 'Disruptor', name: '', title: 'Stormcrafter' },
+        { common_name: 'Doom', name: 'Lucifer', title: 'Doom' }, { common_name: 'Dragon Knight', name: 'Davion', title: 'Dragon Knight' },
+        { common_name: 'Earth Spirit', name: 'Kaolin', title: 'Earth Spirit' }, { common_name: 'Earthshaker', name: 'Raigor Stonehoof', title: 'Earthshaker' },
+        { common_name: 'Elder Titan', name: '', title: 'Worldsmith' }, { common_name: 'Ember Spirit', name: 'Xin', title: 'Ember Spirit' },
+        { common_name: 'Faceless Void', name: 'Darkterror', title: 'Faceless Void' }, { common_name: 'Grimstroke', name: '', title: 'Grimstroke' },
+        { common_name: 'Gyrocopter', name: 'Aurel', title: 'Gyrocopter' }, { common_name: 'Huskar', name: '', title: 'Sacred Warrior' },
+        { common_name: 'Invoker', name: 'Carl', title: 'Invoker' }, { common_name: 'Jakiro', name: 'Jakiro', title: 'Twin Head Dragon' },
+        { common_name: 'Juggernaut', name: 'Yurnero', title: 'Juggernaut' }, { common_name: 'Keeper of the Light', name: 'Ezalor', title: 'Keeper of the Light' },
+        { common_name: 'Kunkka', name: '', title: 'Admiral' }, { common_name: 'Leshrac', name: 'Leshrac', title: 'Tormented Soul' },
+        { common_name: 'Lich', name: 'Ethreain', title: 'Lich' }, { common_name: 'Lifestealer', name: 'N\'aix', title: 'Lifestealer' },
+        { common_name: 'Lion', name: 'Lion', title: 'Demon Witch' }, { common_name: 'Lone Druid', name: 'Sylla', title: 'Lone Druid' },
+        { common_name: 'Lycan', name: 'Banehallow', title: 'Lycan' }, { common_name: 'Magnus', name: 'Magnus', title: 'Magnoceros' },
+        { common_name: 'Mars', name: 'Mars', title: 'First Son of Heaven' }, { common_name: 'Meepo', name: 'Meepo', title: 'Geomancer' },
+        { common_name: 'Monkey King', name: 'Sun Wukong', title: 'Monkey King' }, { common_name: 'Nature\'s Prophet', name: 'Tequoia', title: 'Nature\'s Prophet' },
+        { common_name: 'Necrophos', name: 'Rotund\'jere', title: 'Necrophos' }, { common_name: 'Night Stalker', name: 'Balanar', title: 'Night Stalker' },
+        { common_name: 'Nyx Assassin', name: '', title: 'Nyx Assassin' }, { common_name: 'Ogre Magi', name: 'Aggron Stonebreak', title: 'Ogre Magi' },
+        { common_name: 'Omniknight', name: 'Purist Thunderwrath', title: 'Omniknight' }, { common_name: 'Oracle', name: 'Nerif', title: 'Oracle' },
+        { common_name: 'Pangolier', name: 'Donté Panlin', title: 'Pangolier' }, { common_name: 'Phantom Lancer', name: 'Azwraith', title: 'Phantom Lancer' },
+        { common_name: 'Primal Beast', name: '', title: 'Primal Beast' }, { common_name: 'Pudge', name: '', title: 'Butcher' },
+        { common_name: 'Pugna', name: 'Pugna', title: 'Pugna' }, { common_name: 'Riki', name: 'Riki', title: 'Stealth Assassin' },
+        { common_name: 'Ringmaster', name: '', title: 'Ringmaster' }, { common_name: 'Rubick', name: 'Rubick', title: 'Grand Magus' },
+        { common_name: 'Sand King', name: 'Crixalis', title: 'Sand King' }, { common_name: 'Shadow Demon', name: '', title: 'Shadow Demon' },
+        { common_name: 'Shadow Shaman', name: 'Rhasta', title: 'Shadow Shaman' }, { common_name: 'Silencer', name: 'Nortrom', title: 'Silencer' },
+        { common_name: 'Skywrath Mage', name: 'Dragonus', title: 'Skywrath Mage' }, { common_name: 'Slardar', name: 'Slardar', title: 'Slithereen Guard' },
+        { common_name: 'Slark', name: 'Slark', title: 'Nightcrawler' }, { common_name: 'Sniper', name: 'Kardel Sharpeye', title: 'Sniper' },
+        { common_name: 'Spirit Breaker', name: 'Barathrum', title: 'Spirit Breaker' }, { common_name: 'Storm Spirit', name: 'Raijin Thunderkeg', title: 'Storm Spirit' },
+        { common_name: 'Sven', name: 'Sven', title: 'Rogue Knight' }, { common_name: 'Techies', name: 'Squee, Spleen, and Spoon', title: 'Techies' },
+        { common_name: 'Terrorblade', name: 'Terrorblade', title: 'Demon Marauder' }, { common_name: 'Tidehunter', name: 'Leviathan', title: 'Tidehunter' },
+        { common_name: 'Timbersaw', name: 'Rizzrack', title: 'Timbersaw' }, { common_name: 'Tinker', name: 'Boush', title: 'Tinker' },
+        { common_name: 'Tiny', name: 'Tiny', title: 'Stone Giant' }, { common_name: 'Treant Protector', name: 'Rooftrellen', title: 'Treant Protector' },
+        { common_name: 'Troll Warlord', name: 'Jah\'rakal', title: 'Troll Warlord' }, { common_name: 'Tusk', name: 'Ymir', title: 'Tusk' },
+        { common_name: 'Underlord', name: 'Vrogros', title: 'Abyssal Underlord' }, { common_name: 'Undying', name: '', title: 'Almighty Dirge' },
+        { common_name: 'Ursa', name: 'Ulfsaar', title: 'Ursa Warrior' }, { common_name: 'Venomancer', name: 'Lesale', title: 'Venomancer' },
+        { common_name: 'Viper', name: 'Viper', title: 'Netherdrake' }, { common_name: 'Visage', name: '', title: 'Necro\'lic' },
+        { common_name: 'Void Spirit', name: 'Inai', title: 'Void Spirit' }, { common_name: 'Warlock', name: 'Demnok Lannik', title: 'Warlock' },
+        { common_name: 'Weaver', name: 'Skitskurr', title: 'Weaver' }, { common_name: 'Witch Doctor', name: 'Zharvakko', title: 'Witch Doctor' },
+        { common_name: 'Wraith King', name: 'Ostarion', title: 'Wraith King' }, { common_name: 'Zeus', name: 'Zeus', title: 'Lord of Heaven' }
     ],
     girl: [
-        { common_name: 'Broodmother', name: 'Black Arachnia', title: 'The Broodmother' }, { common_name: 'Crystal Maiden', name: 'Rylai', title: 'The Crystal Maiden' },
-        { common_name: 'Dark Willow', name: 'Mireska Sunbreeze', title: 'The Dark Willow' }, { common_name: 'Dawnbreaker', name: 'Valora', title: 'The Dawnbreaker' },
-        { common_name: 'Death Prophet', name: 'Krobelus', title: 'The Death Prophet' }, { common_name: 'Drow Ranger', name: 'Traxex', title: 'The Drow Ranger' },
-        { common_name: 'Enchantress', name: 'Aiushtha', title: 'The Enchantress' }, { common_name: 'Hoodwink', name: '---', title: 'The Hoodwink' },
-        { common_name: 'Legion Commander', name: 'Tresdin', title: 'The Legion Commander' }, { common_name: 'Lina', name: 'Lina', title: 'The Slayer' },
-        { common_name: 'Luna', name: 'Luna', title: 'The Moon Rider' }, { common_name: 'Marci', name: 'Marci', title: '---' },
-        { common_name: 'Medusa', name: 'Medusa', title: 'The Gorgon' }, { common_name: 'Mirana', name: 'Mirana', title: 'The Princess of the Moon' },
-        { common_name: 'Muerta', name: '---', title: 'The Muerta' }, { common_name: 'Naga Siren', name: 'Slithice', title: 'The Naga Siren' },
-        { common_name: 'Phantom Assassin', name: 'Mortred', title: 'The Phantom Assassin' }, { common_name: 'Queen of Pain', name: 'Akasha', title: 'The Queen of Pain' },
-        { common_name: 'Snapfire', name: 'Beatrix', title: 'The Snapfire' }, { common_name: 'Spectre', name: 'Mercurial', title: 'The Spectre' },
-        { common_name: 'Templar Assassin', name: 'Lanaya', title: 'The Templar Assassin' }, { common_name: 'Vengeful Spirit', name: 'Shendelzare', title: 'The Vengeful Spirit' },
-        { common_name: 'Windranger', name: 'Lyralei', title: 'The Windranger' }, { common_name: 'Winter Wyvern', name: 'Auroth', title: 'The Winter Wyvern' }
+        { common_name: 'Broodmother', name: 'Black Arachnia', title: 'Broodmother' }, { common_name: 'Crystal Maiden', name: 'Rylai', title: 'Crystal Maiden' },
+        { common_name: 'Dark Willow', name: 'Mireska Sunbreeze', title: 'Dark Willow' }, { common_name: 'Dawnbreaker', name: 'Valora', title: 'Dawnbreaker' },
+        { common_name: 'Death Prophet', name: 'Krobelus', title: 'Death Prophet' }, { common_name: 'Drow Ranger', name: 'Traxex', title: 'Drow Ranger' },
+        { common_name: 'Enchantress', name: 'Aiushtha', title: 'Enchantress' }, { common_name: 'Hoodwink', name: '', title: 'Hoodwink' },
+        { common_name: 'Legion Commander', name: 'Tresdin', title: 'Legion Commander' }, { common_name: 'Lina', name: 'Lina', title: 'Slayer' },
+        { common_name: 'Luna', name: 'Luna', title: 'Moon Rider' }, { common_name: 'Marci', name: 'Marci', title: '' },
+        { common_name: 'Medusa', name: 'Medusa', title: 'Gorgon' }, { common_name: 'Mirana', name: 'Mirana', title: 'Princess of the Moon' },
+        { common_name: 'Muerta', name: '', title: 'Muerta' }, { common_name: 'Naga Siren', name: 'Slithice', title: 'Naga Siren' },
+        { common_name: 'Phantom Assassin', name: 'Mortred', title: 'Phantom Assassin' }, { common_name: 'Queen of Pain', name: 'Akasha', title: 'Queen of Pain' },
+        { common_name: 'Snapfire', name: 'Beatrix', title: 'Snapfire' }, { common_name: 'Spectre', name: 'Mercurial', title: 'Spectre' },
+        { common_name: 'Templar Assassin', name: 'Lanaya', title: 'Templar Assassin' }, { common_name: 'Vengeful Spirit', name: 'Shendelzare', title: 'Vengeful Spirit' },
+        { common_name: 'Windranger', name: 'Lyralei', title: 'Windranger' }, { common_name: 'Winter Wyvern', name: 'Auroth', title: 'Winter Wyvern' }
     ],
     unknown: [
-        { common_name: 'Arc Warden', name: 'Zet', title: 'The Arc Warden' }, { common_name: 'Bane', name: 'Atropos', title: 'The Bane' },
-        { common_name: 'Enigma', name: '---', title: 'The Consumer of Worlds' }, { common_name: 'Io', name: 'Io', title: 'The Wisp' },
-        { common_name: 'Morphling', name: 'Morphling', title: 'The Morphling' }, { common_name: 'Outworld Destroyer', name: 'Harbinger', title: 'The Outworld Destroyer' },
-        { common_name: 'Phoenix', name: 'Icarus', title: 'The Phoenix' }, { common_name: 'Puck', name: 'Puck', title: 'The Faerie Dragon' },
-        { common_name: 'Razor', name: 'Razor', title: 'The Lightning Revenant' }, { common_name: 'Shadow Fiend', name: 'Nevermore', title: 'The Shadow Fiend' }
+        { common_name: 'Arc Warden', name: 'Zet', title: 'Arc Warden' }, { common_name: 'Bane', name: 'Atropos', title: 'Bane' },
+        { common_name: 'Enigma', name: '', title: 'Consumer of Worlds' }, { common_name: 'Io', name: 'Io', title: 'Wisp' },
+        { common_name: 'Morphling', name: 'Morphling', title: 'Morphling' }, { common_name: 'Outworld Destroyer', name: 'Harbinger', title: 'Outworld Destroyer' },
+        { common_name: 'Phoenix', name: 'Icarus', title: 'Phoenix' }, { common_name: 'Puck', name: 'Puck', title: 'Faerie Dragon' },
+        { common_name: 'Razor', name: 'Razor', title: 'Lightning Revenant' }, { common_name: 'Shadow Fiend', name: 'Nevermore', title: 'Shadow Fiend' }
     ]
   };
 
@@ -184,13 +184,13 @@
     const heroForTitle = heroPool[Math.floor(Math.random() * heroPool.length)];
     const heroForName = heroPool[Math.floor(Math.random() * heroPool.length)];
     
-    // *** NEW LOGIC: Determine the name to use, with a fallback to common_name ***
+    // Determine the name to use, with a fallback to common_name
     let nameToUse = heroForName.name;
-    if (nameToUse === '---' || !nameToUse) {
+    if (nameToUse === '---' || !nameToUse) { // !nameToUse catches the new empty strings
         nameToUse = heroForName.common_name;
     }
 
-    // Construct the new name format
+    // Construct the name format
     const finalName = `${nameToUse} "${heroForTitle.title}" Stellwagen`;
 
     const revealContent = `
