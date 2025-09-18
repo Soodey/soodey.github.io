@@ -67,7 +67,8 @@
       z-index: 10;
       display: none;
       cursor: pointer;
-      max-width: 90%;
+      width: 90%;
+      max-width: 800px;
     }
     .wobble {
       animation: wobble 1s ease-in-out infinite;
@@ -77,6 +78,20 @@
       25% { transform: translate(-50%, -50%) rotate(2deg); }
       50% { transform: translate(-50%, -50%) rotate(-2deg); }
       75% { transform: translate(-50%, -50%) rotate(2deg); }
+    }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+      .reveal-card {
+        padding: 30px;
+        width: 95%;
+      }
+      .reveal-card h2 {
+        font-size: 2rem !important;
+      }
+      .reveal-card p {
+        font-size: 1.25rem !important;
+      }
     }
   </style>
 </head>
@@ -186,7 +201,7 @@
     
     // Determine the name to use, with a fallback to common_name
     let nameToUse = heroForName.name;
-    if (nameToUse === '---' || !nameToUse) { // !nameToUse catches the new empty strings
+    if (nameToUse === '---' || !nameToUse) {
         nameToUse = heroForName.common_name;
     }
 
