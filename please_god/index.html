@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Source Tells Me Meme Generator</title>
+  <title>Tim Pool Meme Generator</title>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -11,8 +11,9 @@
       flex-direction: column;
       align-items: center;
       padding: 40px 20px;
-      background-color: #f0f2f5;
+      background-color: #242d34;
       margin: 0;
+      color: white;
     }
     .controls {
       margin-bottom: 24px;
@@ -24,18 +25,20 @@
     }
     label {
       font-weight: bold;
-      color: #333;
+      color: #e7e9ea;
     }
     input[type="text"] {
       padding: 14px;
       font-size: 16px;
-      border: 1px solid #ccc;
+      background-color: #15202b;
+      color: white;
+      border: 1px solid #38444d;
       border-radius: 8px;
       outline: none;
     }
     input[type="text"]:focus {
       border-color: #1da1f2;
-      box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
+      box-shadow: 0 0 0 1px #1da1f2;
     }
     button {
       padding: 14px 24px;
@@ -58,8 +61,8 @@
     }
     canvas {
       border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      background-color: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      background-color: #15202b;
     }
   </style>
 </head>
@@ -81,67 +84,136 @@
   const input = document.getElementById('memeInput');
   const downloadBtn = document.getElementById('downloadBtn');
 
+  const pfpImage = new Image();
+  pfpImage.src = 'tim-pool-pfp.jpg';
+
+  const verifiedPath = new Path2D('M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.918-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.337 2.25c-.416-.165-.866-.25-1.336-.25-2.21 0-3.918 1.79-3.918 4 0 .495.084.965.238 1.4-1.273.65-2.148 2.02-2.148 3.6 0 1.46.827 2.74 2.01 3.444-.067.31-.1.63-.1.956 0 2.21 1.708 4 3.917 4 .56 0 1.09-.12 1.58-.33.642 1.13 1.84 1.89 3.205 1.89s2.56-.76 3.204-1.89c.49.21 1.02.33 1.58.33 2.21 0 3.918-1.79 3.918-4 0-.326-.033-.646-.1-.956 1.183-.704 2.01-1.984 2.01-3.444zm-11.43 5.484l-4.48-4.36 1.4-1.43 3.01 2.93 6.95-7.1 1.45 1.39-8.33 8.57z');
+  const replyPath = new Path2D('M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z');
+  const repostPath = new Path2D('M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5c-2.209 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 6H11V4h5.5c2.209 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.896-2-2-2z');
+  const likePath = new Path2D('M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.552 1.12-.633 2.78.479 4.82 1.074 1.97 3.257 4.27 7.129 6.61 3.87-2.34 6.052-4.64 7.126-6.61 1.111-2.04 1.03-3.7.477-4.82-.561-1.13-1.666-1.84-2.908-1.91zm4.187 7.69c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z');
+  const viewPath = new Path2D('M8.75 21V3h2v18h-2zM18 21V8.5h2V21h-2zM4 21l.004-10h2L6 21H4zm9.248 0v-7h2v7h-2z');
+  const bookmarkPath = new Path2D('M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z');
+  const sharePath = new Path2D('M12 2.59l5.7 5.7-1.41 1.42L13 6.41V16h-2V6.41l-3.3 3.3-1.41-1.42L12 2.59zM21 15l-.02 3.51c0 1.38-1.12 2.49-2.5 2.49H5.5C4.11 21 3 19.88 3 18.5V15h2v3.5c0 .28.22.5.5.5h12.98c.28 0 .5-.22.5-.5L19 15h2z');
+
   function wrapText(context, text, x, y, maxWidth, lineHeight) {
-    const words = text.split(' ');
-    let line = '';
+    const paragraphs = text.split('\n');
     let currentY = y;
 
-    for(let n = 0; n < words.length; n++) {
-      const testLine = line + words[n] + ' ';
-      const metrics = context.measureText(testLine);
-      const testWidth = metrics.width;
-
-      if (testWidth > maxWidth && n > 0) {
-        context.fillText(line, x, currentY);
-        line = words[n] + ' ';
+    for (let i = 0; i < paragraphs.length; i++) {
+      if (paragraphs[i] === '') {
         currentY += lineHeight;
-      } else {
-        line = testLine;
+        continue;
       }
+
+      const words = paragraphs[i].split(' ');
+      let line = '';
+
+      for(let n = 0; n < words.length; n++) {
+        const testLine = line + words[n] + ' ';
+        const metrics = context.measureText(testLine);
+        const testWidth = metrics.width;
+
+        if (testWidth > maxWidth && n > 0) {
+          context.fillText(line, x, currentY);
+          line = words[n] + ' ';
+          currentY += lineHeight;
+        } else {
+          line = testLine;
+        }
+      }
+      context.fillText(line, x, currentY);
+      currentY += lineHeight;
     }
-    context.fillText(line, x, currentY);
-    return currentY + lineHeight;
+    return currentY;
+  }
+
+  function drawIcon(path, x, y) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(0.85, 0.85);
+    ctx.fill(path);
+    ctx.restore();
   }
 
   function drawMeme() {
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = '#15202b';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = '#cbd5e1';
+    ctx.save();
     ctx.beginPath();
-    ctx.arc(48, 48, 24, 0, Math.PI * 2, true);
-    ctx.fill();
+    ctx.arc(44, 44, 24, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.clip();
 
-    ctx.fillStyle = '#0f1419';
-    ctx.font = 'bold 15px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
-    ctx.fillText('Source', 84, 42);
+    if (pfpImage.complete && pfpImage.naturalHeight !== 0) {
+      ctx.drawImage(pfpImage, 20, 20, 48, 48);
+    } else {
+      ctx.fillStyle = '#38444d';
+      ctx.fillRect(20, 20, 48, 48);
+    }
+    ctx.restore();
 
-    ctx.fillStyle = '#536471';
+    const name = 'Tim Pool';
+    ctx.font = 'bold 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+    const nameWidth = ctx.measureText(name).width;
+
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(name, 80, 38);
+
+    ctx.save();
+    ctx.translate(80 + nameWidth + 4, 22);
+    ctx.scale(0.8, 0.8);
+    ctx.fillStyle = '#1d9bf0';
+    ctx.fill(verifiedPath);
+    ctx.restore();
+
+    const verifiedWidth = 22;
+
+    ctx.fillStyle = '#8b98a5';
     ctx.font = '15px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
-    ctx.fillText('@insider_source · 1h', 142, 42);
+    ctx.fillText('@Timcast · 1h', 80 + nameWidth + 4 + verifiedWidth, 38);
 
-    const userText = input.value.trim() || 'Charlie is stable';
-    const fullText = `Source tells me ${userText} please God`;
+    const userText = input.value.trim();
+    const fullText = `Source tells me ${userText}.\n\nPlease god`;
 
-    ctx.fillStyle = '#0f1419';
-    ctx.font = '23px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '20px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
 
-    const finalY = wrapText(ctx, fullText, 24, 100, 552, 32);
+    const textEndY = wrapText(ctx, fullText, 80, 72, 500, 26);
 
-    if (finalY > canvas.height - 20 && canvas.height < 400) {
-      canvas.height = finalY + 40;
-      drawMeme();
-    } else if (finalY < 200 && canvas.height > 200) {
-      canvas.height = 200;
+    const metricsY = textEndY + 8;
+    ctx.fillStyle = '#8b98a5';
+    ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+
+    drawIcon(replyPath, 80, metricsY);
+    ctx.fillText('5.4K', 104, metricsY + 14);
+
+    drawIcon(repostPath, 165, metricsY);
+    ctx.fillText('7K', 190, metricsY + 14);
+
+    drawIcon(likePath, 250, metricsY);
+    ctx.fillText('113K', 275, metricsY + 14);
+
+    drawIcon(viewPath, 345, metricsY);
+    ctx.fillText('5.5M', 370, metricsY + 14);
+
+    drawIcon(bookmarkPath, 445, metricsY);
+    drawIcon(sharePath, 485, metricsY);
+
+    const finalCanvasHeight = metricsY + 40;
+
+    if (Math.abs(canvas.height - finalCanvasHeight) > 2) {
+      canvas.height = finalCanvasHeight;
       drawMeme();
     }
   }
 
+  pfpImage.onload = drawMeme;
   input.addEventListener('input', drawMeme);
 
   downloadBtn.addEventListener('click', () => {
     const link = document.createElement('a');
-    link.download = 'source-tells-me-meme.png';
+    link.download = 'tim-pool-darkmode-meme.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
   });
