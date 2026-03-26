@@ -3,18 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tim Pool Meme Generator</title>
+  <title>High-Res Tim Pool Meme Generator</title>
   <style>
+    :root {
+      --bg-color: #e6ecf0;
+      --text-color: #000000;
+      --control-bg: #ffffff;
+      --input-border: #ccc;
+    }
+
+    body.dark-mode {
+      --bg-color: #242d34;
+      --text-color: #ffffff;
+      --control-bg: #15202b;
+      --input-border: #38444d;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 40px 20px;
-      background-color: #242d34;
+      background-color: var(--bg-color);
       margin: 0;
-      color: white;
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
     }
+
     .controls {
       margin-bottom: 24px;
       display: flex;
@@ -22,25 +38,56 @@
       flex-direction: column;
       width: 100%;
       max-width: 600px;
+      background-color: var(--control-bg);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+
+    .control-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
     label {
       font-weight: bold;
-      color: #e7e9ea;
     }
+
+    #modeToggle {
+      background: none;
+      border: 2px solid #1da1f2;
+      color: #1da1f2;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    #modeToggle:hover {
+      background-color: #1da1f2;
+      color: white;
+    }
+
     input[type="text"] {
       padding: 14px;
       font-size: 16px;
-      background-color: #15202b;
-      color: white;
-      border: 1px solid #38444d;
+      background-color: var(--control-bg);
+      color: var(--text-color);
+      border: 1px solid var(--input-border);
       border-radius: 8px;
       outline: none;
     }
+
     input[type="text"]:focus {
       border-color: #1da1f2;
       box-shadow: 0 0 0 1px #1da1f2;
     }
-    button {
+
+    button#downloadBtn {
       padding: 14px 24px;
       font-size: 16px;
       background-color: #1da1f2;
@@ -50,32 +97,42 @@
       cursor: pointer;
       font-weight: bold;
       transition: background-color 0.2s;
+      width: 100%;
     }
-    button:hover {
+
+    button#downloadBtn:hover {
       background-color: #1a91da;
     }
+
     .canvas-container {
       width: 100%;
       max-width: 600px;
       overflow-x: auto;
     }
+
     canvas {
       border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      background-color: #15202b;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      /* CSS displays it at 600px, but internal resolution is 1200px */
+      width: 600px;
+      height: auto;
+      display: block;
     }
   </style>
 </head>
-<body>
+<body class="dark-mode">
 
 <div class="controls">
-  <label for="memeInput">What does the source tell you?</label>
+  <div class="control-header">
+    <label for="memeInput">What does the source tell you?</label>
+    <button id="modeToggle">Switch to Light Mode</button>
+  </div>
   <input type="text" id="memeInput" value="Charlie is stable">
-  <button id="downloadBtn">Download Meme</button>
+  <button id="downloadBtn">Download High-Res Meme</button>
 </div>
 
 <div class="canvas-container">
-  <canvas id="memeCanvas" width="600" height="200"></canvas>
+  <canvas id="memeCanvas" width="1200" height="400"></canvas>
 </div>
 
 <script>
@@ -83,9 +140,11 @@
   const ctx = canvas.getContext('2d');
   const input = document.getElementById('memeInput');
   const downloadBtn = document.getElementById('downloadBtn');
+  const modeToggle = document.getElementById('modeToggle');
+  const body = document.body;
 
   const pfpImage = new Image();
-  pfpImage.src = 'tim-pool-pfp.jpg';
+  pfpImage.src = 'tim-pool-pfp.png';
 
   const verifiedPath = new Path2D('M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.918-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.337 2.25c-.416-.165-.866-.25-1.336-.25-2.21 0-3.918 1.79-3.918 4 0 .495.084.965.238 1.4-1.273.65-2.148 2.02-2.148 3.6 0 1.46.827 2.74 2.01 3.444-.067.31-.1.63-.1.956 0 2.21 1.708 4 3.917 4 .56 0 1.09-.12 1.58-.33.642 1.13 1.84 1.89 3.205 1.89s2.56-.76 3.204-1.89c.49.21 1.02.33 1.58.33 2.21 0 3.918-1.79 3.918-4 0-.326-.033-.646-.1-.956 1.183-.704 2.01-1.984 2.01-3.444zm-11.43 5.484l-4.48-4.36 1.4-1.43 3.01 2.93 6.95-7.1 1.45 1.39-8.33 8.57z');
   const replyPath = new Path2D('M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z');
@@ -95,6 +154,25 @@
   const bookmarkPath = new Path2D('M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z');
   const sharePath = new Path2D('M12 2.59l5.7 5.7-1.41 1.42L13 6.41V16h-2V6.41l-3.3 3.3-1.41-1.42L12 2.59zM21 15l-.02 3.51c0 1.38-1.12 2.49-2.5 2.49H5.5C4.11 21 3 19.88 3 18.5V15h2v3.5c0 .28.22.5.5.5h12.98c.28 0 .5-.22.5-.5L19 15h2z');
 
+  // Colors
+  let colors = {
+    bg: '#15202b',
+    primary: '#ffffff',
+    secondary: '#8b98a5',
+    pfpPlaceholder: '#38444d'
+  };
+
+  function updateColors() {
+    if (body.classList.contains('dark-mode')) {
+      colors = { bg: '#15202b', primary: '#ffffff', secondary: '#8b98a5', pfpPlaceholder: '#38444d' };
+      modeToggle.textContent = 'Switch to Light Mode';
+    } else {
+      colors = { bg: '#ffffff', primary: '#0f1419', secondary: '#536471', pfpPlaceholder: '#cbd5e1' };
+      modeToggle.textContent = 'Switch to Dark Mode';
+    }
+  }
+
+  // High DPI text wrapping (coordinates must be *2internally but logic remains same)
   function wrapText(context, text, x, y, maxWidth, lineHeight) {
     const paragraphs = text.split('\n');
     let currentY = y;
@@ -127,18 +205,24 @@
     return currentY;
   }
 
-  function drawIcon(path, x, y) {
+  function drawIcon(path, x, y, scale = 1.7) { // Icon scale doubled for HDPI
     ctx.save();
     ctx.translate(x, y);
-    ctx.scale(0.85, 0.85);
+    ctx.scale(scale, scale);
     ctx.fill(path);
     ctx.restore();
   }
 
   function drawMeme() {
-    ctx.fillStyle = '#15202b';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // Step 1: Internal Rescaling for HDPI (Render at 2x)
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transform
+    ctx.scale(2, 2); // Internal scale to 2x (All following coords are standard)
 
+    // Clear and draw background
+    ctx.fillStyle = colors.bg;
+    ctx.fillRect(0, 0, 600, 1000); // Draw large enough for resizing later
+
+    // Draw High-Res PFP (rendered sharp then masked)
     ctx.save();
     ctx.beginPath();
     ctx.arc(44, 44, 24, 0, Math.PI * 2, true);
@@ -146,20 +230,25 @@
     ctx.clip();
 
     if (pfpImage.complete && pfpImage.naturalHeight !== 0) {
+      // Draw high-res image into standard 48x48 box
       ctx.drawImage(pfpImage, 20, 20, 48, 48);
     } else {
-      ctx.fillStyle = '#38444d';
+      ctx.fillStyle = colors.pfpPlaceholder;
       ctx.fillRect(20, 20, 48, 48);
     }
     ctx.restore();
 
+    // Standard coords now apply:
+
+    // Header
     const name = 'Tim Pool';
     ctx.font = 'bold 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
     const nameWidth = ctx.measureText(name).width;
 
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = colors.primary;
     ctx.fillText(name, 80, 38);
 
+    // Verified
     ctx.save();
     ctx.translate(80 + nameWidth + 4, 22);
     ctx.scale(0.8, 0.8);
@@ -167,24 +256,27 @@
     ctx.fill(verifiedPath);
     ctx.restore();
 
-    const verifiedWidth = 22;
-
-    ctx.fillStyle = '#8b98a5';
+    ctx.fillStyle = colors.secondary;
     ctx.font = '15px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
-    ctx.fillText('@Timcast · 1h', 80 + nameWidth + 4 + verifiedWidth, 38);
+    ctx.fillText('@Timcast · 1h', 80 + nameWidth + 4 + 22, 38);
 
+    // Content Text (Doubled size for full res)
     const userText = input.value.trim();
     const fullText = `Source tells me ${userText}.\n\nPlease god`;
 
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = colors.primary;
+    // Text is 20px on screen, but we need high resolution context
     ctx.font = '20px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
 
+    // Final text wrapping (coords/maxwidth are standard)
     const textEndY = wrapText(ctx, fullText, 80, 72, 500, 26);
 
+    // Engagement metrics (Standard coords apply)
     const metricsY = textEndY + 8;
-    ctx.fillStyle = '#8b98a5';
+    ctx.fillStyle = colors.secondary;
     ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
 
+    // Coords are fine, drawIcon handles the 2x scale
     drawIcon(replyPath, 80, metricsY);
     ctx.fillText('5.4K', 104, metricsY + 14);
 
@@ -198,26 +290,36 @@
     ctx.fillText('5.5M', 370, metricsY + 14);
 
     drawIcon(bookmarkPath, 445, metricsY);
-    drawIcon(sharePath, 485, metricsY);
+    drawIcon(sharePath, 485, metricsY); // Updated Share Icon
 
-    const finalCanvasHeight = metricsY + 40;
+    // Handle dynamic canvas height (needs context in real pixels)
+    const standardFinalHeight = metricsY + 40;
+    const hdpiFinalHeight = standardFinalHeight * 2;
 
-    if (Math.abs(canvas.height - finalCanvasHeight) > 2) {
-      canvas.height = finalCanvasHeight;
-      drawMeme();
+    if (Math.abs(canvas.height - hdpiFinalHeight) > 4) {
+      canvas.height = hdpiFinalHeight;
+      drawMeme(); // Redraw once with corrected height
     }
   }
 
+  // Initialization and listeners
   pfpImage.onload = drawMeme;
   input.addEventListener('input', drawMeme);
 
+  modeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    updateColors();
+    drawMeme();
+  });
+
   downloadBtn.addEventListener('click', () => {
     const link = document.createElement('a');
-    link.download = 'tim-pool-darkmode-meme.png';
-    link.href = canvas.toDataURL('image/png');
+    link.download = `tim-pool-meme-${body.classList.contains('dark-mode') ? 'dark' : 'light'}.png`;
+    link.href = canvas.toDataURL('image/png', 1.0); // 1.0 Quality
     link.click();
   });
 
+  updateColors(); // Initial color set
   drawMeme();
 </script>
 </body>
