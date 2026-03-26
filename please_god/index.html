@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Source Tells Me Meme Generator</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      background-color: #f0f2f5;
+      margin: 0;
+    }
+    .controls {
+      margin-bottom: 24px;
+      display: flex;
+      gap: 12px;
+      flex-direction: column;
+      width: 100%;
+      max-width: 600px;
+    }
+    label {
+      font-weight: bold;
+      color: #333;
+    }
+    input[type="text"] {
+      padding: 14px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+    }
+    input[type="text"]:focus {
+      border-color: #1da1f2;
+      box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
+    }
+    button {
+      padding: 14px 24px;
+      font-size: 16px;
+      background-color: #1da1f2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #1a91da;
+    }
+    .canvas-container {
+      width: 100%;
+      max-width: 600px;
+      overflow-x: auto;
+    }
+    canvas {
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      background-color: white;
+    }
+  </style>
+</head>
+<body>
+
+<div class="controls">
+  <label for="memeInput">What does the source tell you?</label>
+  <input type="text" id="memeInput" value="Charlie is stable">
+  <button id="downloadBtn">Download Meme</button>
+</div>
+
+<div class="canvas-container">
+  <canvas id="memeCanvas" width="600" height="200"></canvas>
+</div>
+
+<script>
+  const canvas = document.getElementById('memeCanvas');
+  const ctx = canvas.getContext('2d');
+  const input = document.getElementById('memeInput');
+  const downloadBtn = document.getElementById('downloadBtn');
+
+  function wrapText(context, text, x, y, maxWidth, lineHeight) {
+    const words = text.split(' ');
+    let line = '';
+    let currentY = y;
+
+    for(let n = 0; n < words.length; n++) {
+      const testLine = line + words[n] + ' ';
+      const metrics = context.measureText(testLine);
+      const testWidth = metrics.width;
+
+      if (testWidth > maxWidth && n > 0) {
+        context.fillText(line, x, currentY);
+        line = words[n] + ' ';
+        currentY += lineHeight;
+      } else {
+        line = testLine;
+      }
+    }
+    context.fillText(line, x, currentY);
+    return currentY + lineHeight;
+  }
+
+  function drawMeme() {
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.beginPath();
+    ctx.arc(48, 48, 24, 0, Math.PI * 2, true);
+    ctx.fill();
+
+    ctx.fillStyle = '#0f1419';
+    ctx.font = 'bold 15px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+    ctx.fillText('Source', 84, 42);
+
+    ctx.fillStyle = '#536471';
+    ctx.font = '15px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+    ctx.fillText('@insider_source · 1h', 142, 42);
+
+    const userText = input.value.trim() || 'Charlie is stable';
+    const fullText = `Source tells me ${userText} please God`;
+
+    ctx.fillStyle = '#0f1419';
+    ctx.font = '23px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+
+    const finalY = wrapText(ctx, fullText, 24, 100, 552, 32);
+
+    if (finalY > canvas.height - 20 && canvas.height < 400) {
+      canvas.height = finalY + 40;
+      drawMeme();
+    } else if (finalY < 200 && canvas.height > 200) {
+      canvas.height = 200;
+      drawMeme();
+    }
+  }
+
+  input.addEventListener('input', drawMeme);
+
+  downloadBtn.addEventListener('click', () => {
+    const link = document.createElement('a');
+    link.download = 'source-tells-me-meme.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
+
+  drawMeme();
+</script>
+</body>
+</html>
